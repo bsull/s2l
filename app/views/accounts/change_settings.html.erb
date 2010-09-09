@@ -1,0 +1,25 @@
+<%= form_for(@account, :url => settings_path, :html => {:method => "post"}) do |f| %>
+
+  <h5>Update Settings</h5>
+  
+    <% if @account.errors.any? %>
+      <ul>
+      <% @account.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    <% end %>
+
+    <%= f.label :time_zone %>
+    <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, 
+                           :default => "Pacific Time (US & Canada)", :include_blank => true %>
+    
+    <%= f.label :fiscal_year_end %>
+    <%= select_month(@account.fiscal_year_end, :field_name => 'fiscal_year_end') %>
+
+    <%= f.label "Recent Period (Number of Days)" %>
+    <%= f.text_field :recent_period %>
+
+    <p><%= f.submit %></p>
+ 
+<% end %>	

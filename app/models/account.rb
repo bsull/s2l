@@ -8,7 +8,7 @@ class Account < ActiveRecord::Base
   validates_inclusion_of :recent_period, :in => 1..30, :message => "must be from 1 to 30."
   
   has_many :users
-  # has_many :confidences
+  has_many :confidences
   # has_many :customers
   # has_many :opportunities
   # has_many :account_targets

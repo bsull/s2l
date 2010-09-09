@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Sales2l</title>
+	<%= stylesheet_link_tag 'sales2l.css', "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/cupertino/jquery-ui.css" %>
+	<%= javascript_include_tag :defaults, 'jquery-ui-1.8.2.custom.min.js', 'jquery.autocomplete.js', 'jquery.flot.min.js' %>
+	<!--[if IE]><script language="javascript" type="text/javascript" src="../excanvas.min.js"></script><![endif]-->
+	<%= csrf_meta_tag %>
+</head>
+<body>
+	<div class="main">
+		<div class="g320">
+			<%= image_tag 'sales2l.png', :id => 'logo'%>
+		</div>
+		<div class="g640", id="top_nav">
+			<% if current_user %>
+			    Howdy <%= current_user.nickname %>! | 
+			    <%= link_to "User Profile", profile_url %> |
+			    <% if can? :change_settings, Account %>
+			    <%= link_to "Account Settings", settings_url %> |
+			    <% end %>
+			    <%= link_to "Sign Out", 'users/sign_out' %>
+			  <% end %>
+		</div>	
+		<div class = "g960", id="menu">
+		<% if current_user %>
+			<h3>
+				<%= link_to_unless_current("Home", home_url) %> | 
+				Forecast | 
+                <%= link_to_unless_current("Opportunities", home_url) %> | 
+				Journal | 
+				Files | 
+				<%= link_to_unless_current("My Sales2L", my_sales2l_url) %>
+                
+			</h3>
+		<% end %>
+		</div>
+		<div class="g960">
+			<!-- <% flash.each do |key, value| -%>
+			<h4 id="flash_<%= key %>"><%= value %></h4>
+			<% end -%> -->
+			<%= yield %>	
+		</div>
+		<div class ="g960">
+			<%= debug(params) %>
+	    </div>
+	</div>
+</body>
+</html>

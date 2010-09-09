@@ -1,0 +1,31 @@
+<%= form_for(@confidence) do |f| %>
+
+  <h5><%= legend %></h5>
+
+  <% if @confidence.errors.any? %>
+    <ul>
+      <% @confidence.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+
+  <%= f.label :weight, 'Weight (%)' %>
+  <%= f.text_field :weight %>
+
+  <p>
+    <%= f.check_box :enabled %>
+    <%= f.label :enabled, 'Enabled', :class => "check" %>
+  </p>  
+
+    <%= f.submit %>
+
+<% end %>	
+
+

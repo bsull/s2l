@@ -83,18 +83,31 @@ class UsersController < ApplicationController
   end
   
   def sign_up
-    # redirect_to users_url unless @current_account.users.empty?
+    redirect_to users_url unless @current_account.users.empty?
     if request.post?
       @user = @current_account.users.build(params[:user])
-      # @user.role = 'admin'
+      @user.role = 'administrator'
       @user.time_zone = "Central Time (US & Canada)"
       if @user.save
         # UserTarget.defaults(@user)
-        session[:user_id] = @user.id
+        # session[:user_id] = @user.id
         redirect_to(accounts_url, :notice => "Welcome, you're signed up & signed in.")
       end
     else
       @user = User.new
+    end
+  end
+  
+  def change_profile
+    if request.post?
+      @user = @current_user
+      if @user.update_attributes(params[:user])
+        redirect_to(@user, :notice => 'Profile updated.')
+      else
+        render :action => "change_profile"
+      end    
+    else
+      @user = @current_user
     end
   end
 

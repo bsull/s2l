@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.0'
 gem 'jquery-rails'
 gem 'devise'
+gem 'cancan', :git => 'git://github.com/ryanb/cancan.git'
 
 
 # Bundle edge Rails instead:

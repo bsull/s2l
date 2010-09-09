@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(:version => 20100908202115) do
     t.integer  "recent_period"
     t.integer  "fiscal_year_end"
   end
+  
+  create_table "confidences", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "weight"
+    t.boolean  "enabled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                               :default => "", :null => false
@@ -38,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20100908202115) do
     t.integer  "account_id"
     t.string   "nickname"
     t.string   "time_zone"
+    t.string   "role"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

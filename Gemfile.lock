@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/ryanb/cancan.git
+  revision: a5ff826e40f7a3999ab26b164e7ea9de44831367
+  specs:
+    cancan (1.4.0.beta1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -77,6 +83,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  cancan!
   devise
   jquery-rails
   rails (= 3.0.0)

@@ -1,2 +1,65 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div id="chart" style="width:600px;height:300px;"></div> 
+<script id="source" language="javascript" type="text/javascript"> 
+$(function () {
+	
+	var d = <%= home_chart(@current_account).to_json %>;
+
+	
+	
+    $.plot($("#chart"), [
+
+        {
+	        label: "Targets",
+            data: d[0],
+            lines: { show: true, steps: true, fill: true, lineWidth: 0}
+        },
+        {
+	        label: "Bookings",
+            data: d[1],
+            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0 }
+        },
+        {
+	        label: "Forecast",
+            data: d[2],
+            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0 }
+        }
+    ],
+ { xaxis: 
+	{mode: "time",
+	 min: d[3],
+	 max: d[4],
+	 ticks: 5 }});
+});
+</script>
+
+<table>
+  <caption>Recent Wins</caption>
+	<% @recent_wins.each do |opportunity| %>
+	  <tr>
+	    <td><%= opportunity.customer.name%> - <%= opportunity.name %></td>
+	    <td><%= opportunity.order_value %></td>
+	    <td><%= opportunity.user.nickname %></td>
+	  </tr>
+	<% end %>
+</table>
+
+<table>
+  <caption>Recently Lost or Dead</caption>
+	<% @recent_lost_or_dead.each do |opportunity| %>
+	  <tr>
+	    <td><%= opportunity.customer.name%> - <%= opportunity.name %></td>
+	    <td><%= opportunity.order_value %></td>
+	  </tr>
+	<% end %>
+</table>
+
+<table>
+  <caption>New to the Forecast</caption>
+	<% @recent_forecast.each do |opportunity| %>
+	  <tr>
+	    <td><%= opportunity.customer.name%> - <%= opportunity.name %></td>
+	    <td><%= opportunity.order_value %></td>
+	    <td><%= opportunity.user.nickname %></td>
+	  </tr>
+	<% end %>
+</table>
