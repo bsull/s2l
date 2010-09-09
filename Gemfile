@@ -4,6 +4,7 @@ gem 'rails', '3.0.0'
 gem 'jquery-rails'
 gem 'devise'
 gem 'cancan', :git => 'git://github.com/ryanb/cancan.git'
+gem 'pg'
 
 
 # Bundle edge Rails instead:
