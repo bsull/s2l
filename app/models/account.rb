@@ -9,7 +9,8 @@ class Account < ActiveRecord::Base
   
   has_many :users
   has_many :confidences
-  # has_many :customers
+  has_many :statuses
+  has_many :customers
   # has_many :opportunities
   # has_many :account_targets
   

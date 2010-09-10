@@ -25,6 +25,7 @@ class AccountsController < ApplicationController
     @account.fiscal_year_end = 12
     if @account.save
       Confidence.defaults(@account)
+      Status.defaults(@account)
       # AccountTarget.defaults(@account)
       redirect_to request.protocol+@account.subdomain+"."+request.domain+request.port_string+sign_up_path
     else

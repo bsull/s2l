@@ -1,0 +1,31 @@
+<h1>Listing statuses</h1>
+
+<table>
+  <tr>
+    <th>Account</th>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Enabled</th>
+    <th>Forecasted</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @statuses.each do |status| %>
+  <tr>
+    <td><%= status.account_id %></td>
+    <td><%= status.name %></td>
+    <td><%= status.description %></td>
+    <td><%= status.enabled %></td>
+    <td><%= status.forecasted %></td>
+    <td><%= link_to 'Show', status %></td>
+    <td><%= link_to 'Edit', edit_status_path(status) %></td>
+    <td><%= link_to 'Destroy', status, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Status', new_status_path %>

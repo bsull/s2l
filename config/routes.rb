@@ -2,11 +2,14 @@ require 'subdomain'
 
 S2l::Application.routes.draw do
 
+
   devise_for :users
 
   resources :users
+  resources :customers
   resources :accounts
   resources :confidences
+  resources :statuses
 
   get "home/index"
   

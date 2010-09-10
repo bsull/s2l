@@ -10,7 +10,7 @@ class Confidence < ActiveRecord::Base
   
   
   def self.defaults(account)  
-    Confidence.create!([{:name => 'Low',     :description => "You're not likely to get the order", :weight => 25},
+    Confidence.create!([{:name => 'Low',     :description => "You're not likely to get the order.", :weight => 25},
                         {:name => 'Medium',  :description => "You may get the order.",             :weight => 50},
                         {:name => 'High',    :description => "You're likely to get the order.",    :weight => 75},
                         {:name => 'Book It', :description => "You're sure you'll get the order.",  :weight => 90}]) do |a|

@@ -9,5 +9,10 @@ class ApplicationController < ActionController::Base
   def set_current_account
     @current_account ||= Account.find_by_subdomain(request.subdomains.last)
   end
-
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_to home_url
+  end
+  
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100908202115) do
+ActiveRecord::Schema.define(:version => 20100910130337) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -20,13 +20,31 @@ ActiveRecord::Schema.define(:version => 20100908202115) do
     t.integer  "recent_period"
     t.integer  "fiscal_year_end"
   end
-  
+
   create_table "confidences", :force => true do |t|
     t.integer  "account_id"
     t.string   "name"
     t.string   "description"
     t.integer  "weight"
     t.boolean  "enabled"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  
+  create_table "customers", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "statuses", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "enabled"
+    t.boolean  "forecasted"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -51,7 +69,7 @@ ActiveRecord::Schema.define(:version => 20100908202115) do
     t.string   "role"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => false
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

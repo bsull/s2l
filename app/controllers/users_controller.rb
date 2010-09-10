@@ -90,7 +90,7 @@ class UsersController < ApplicationController
       @user.time_zone = "Central Time (US & Canada)"
       if @user.save
         # UserTarget.defaults(@user)
-        # session[:user_id] = @user.id
+        sign_in :user, @user # session[:user_id] = @user.id
         redirect_to(accounts_url, :notice => "Welcome, you're signed up & signed in.")
       end
     else

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Account:</b>
+  <%= @status.account_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @status.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @status.description %>
+</p>
+
+<p>
+  <b>Enabled:</b>
+  <%= @status.enabled %>
+</p>
+
+<p>
+  <b>Forecasted:</b>
+  <%= @status.forecasted %>
+</p>
+
+
+<%= link_to 'Edit', edit_status_path(@status) %> |
+<%= link_to 'Back', statuses_path %>

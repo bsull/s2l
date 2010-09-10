@@ -1,0 +1,24 @@
+<table> 
+	<caption>Customers</caption>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th> </th>
+		</tr>
+	</thead>
+	<tbody> 
+		<% @customers.each do |customer| %>
+		<tr>
+			<td><%= link_to customer.name, customer %></td>
+			<td><%= customer.description %></td>
+			<% if can? :update, Customer %> 
+			  <td><%= link_to "edit", edit_customer_path(customer) %></td>
+			<% end %>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<% if can? :create, Customer %> 
+	<%= link_to 'New Customer', new_customer_path %>
+<% end %>
