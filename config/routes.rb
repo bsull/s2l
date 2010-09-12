@@ -5,11 +5,11 @@ S2l::Application.routes.draw do
 
   devise_for :users
 
+  resources :accounts
   resources :users
   resources :customers
-  resources :accounts
   resources :confidences
-  resources :statuses
+  resources :opportunities
 
   get "home/index"
   

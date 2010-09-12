@@ -1,0 +1,45 @@
+<p class="notice"><%= notice %></p>
+
+<p>
+  <b>Account:</b>
+  <%= @opportunity.account_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @opportunity.user_id %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @opportunity.status_id %>
+</p>
+
+<p>
+  <b>Customer:</b>
+  <%= @opportunity.customer_id %>
+</p>
+
+<p>
+  <b>Confidence:</b>
+  <%= @opportunity.confidence_id %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @opportunity.name %>
+</p>
+
+<p>
+  <b>Order value:</b>
+  <%= @opportunity.order_value %>
+</p>
+
+<p>
+  <b>Order date:</b>
+  <%= @opportunity.order_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_opportunity_path(@opportunity) %> |
+<%= link_to 'Back', opportunities_path %>

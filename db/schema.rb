@@ -38,14 +38,31 @@ ActiveRecord::Schema.define(:version => 20100910130337) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "statuses", :force => true do |t|
+  
+  create_table "opportunities", :force => true do |t|
     t.integer  "account_id"
+    t.integer  "user_id"
+    t.integer  "customer_id"
+    t.integer  "confidence_id"
     t.string   "name"
-    t.string   "description"
-    t.boolean  "enabled"
-    t.boolean  "forecasted"
+    t.decimal  "order_value"
+    t.date     "order_date"
     t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "status_change_date"
+    t.string   "status"
+  end
+  
+  create_table "opportunity_records", :force => true do |t|
+    t.integer  "opportunity_id"
+    t.string   "salesman"
+    t.decimal  "order_value"
+    t.date     "order_date"
+    t.integer  "days_to_order"
+    t.string   "status"
+    t.string   "confidence"
+    t.integer  "weight"
+    t.date     "created_at"
     t.datetime "updated_at"
   end
 

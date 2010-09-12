@@ -19,7 +19,7 @@
 			    <% if can? :change_settings, Account %>
 			    <%= link_to "Account Settings", settings_url %> |
 			    <% end %>
-			    <%= link_to "Sign Out", 'users/sign_out' %>
+			    <%= link_to "Sign Out", destroy_user_session_url %>
 			  <% end %>
 		</div>	
 		<div class = "g960", id="menu">
@@ -27,7 +27,7 @@
 			<h3>
 				<%= link_to_unless_current("Home", home_url) %> | 
 				Forecast | 
-                <%= link_to_unless_current("Opportunities", home_url) %> | 
+                <%= link_to_unless_current("Opportunities", opportunities_url) %> | 
 				Journal | 
 				Files | 
 				<%= link_to_unless_current("My Sales2L", my_sales2l_url) %>
@@ -36,14 +36,11 @@
 		<% end %>
 		</div>
 		<div class="g960">
-			<!-- <% flash.each do |key, value| -%>
+			<% flash.each do |key, value| -%>
 			<h4 id="flash_<%= key %>"><%= value %></h4>
-			<% end -%> -->
+			<% end -%>
 			<%= yield %>	
 		</div>
-		<div class ="g960">
-			<%= debug(params) %>
-	    </div>
 	</div>
 </body>
 </html>

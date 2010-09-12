@@ -3,16 +3,17 @@
 
 <% if @current_account %>
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-	  <p><%= f.label :email %><br />
-	  <%= f.text_field :email %></p>
+	  <%= f.label :email %>
+	  <%= f.text_field :email %>
 
-	  <p><%= f.label :password %><br />
-	  <%= f.password_field :password %></p>
+	  <%= f.label :password %>
+	  <%= f.password_field :password %>
 
 	  <%= f.hidden_field :account_id, :value => @current_account.id %>
 
 	  <% if devise_mapping.rememberable? -%>
-	    <p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+	    <%= f.check_box :remember_me %>
+	    <%= f.label :remember_me, :class => "check" %>
 	  <% end -%>
 
 	  <p><%= f.submit "Sign in" %></p>
