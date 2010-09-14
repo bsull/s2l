@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100910130337) do
+ActiveRecord::Schema.define(:version => 20100914155828) do
+
+  create_table "account_targets", :force => true do |t|
+    t.integer  "account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "q1"
+    t.integer  "q2"
+    t.integer  "q3"
+    t.integer  "q4"
+    t.integer  "fiscal_year"
+  end
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -30,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20100910130337) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-  
+
   create_table "customers", :force => true do |t|
     t.integer  "account_id"
     t.string   "name"
@@ -38,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20100910130337) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-  
+
   create_table "opportunities", :force => true do |t|
     t.integer  "account_id"
     t.integer  "user_id"
@@ -51,8 +62,10 @@ ActiveRecord::Schema.define(:version => 20100910130337) do
     t.datetime "updated_at"
     t.date     "status_change_date"
     t.string   "status"
+    t.boolean  "stale"
+    t.date     "update_requirement"
   end
-  
+
   create_table "opportunity_records", :force => true do |t|
     t.integer  "opportunity_id"
     t.string   "salesman"
@@ -63,6 +76,17 @@ ActiveRecord::Schema.define(:version => 20100910130337) do
     t.string   "confidence"
     t.integer  "weight"
     t.date     "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_targets", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "fiscal_year"
+    t.integer  "q1"
+    t.integer  "q2"
+    t.integer  "q3"
+    t.integer  "q4"
+    t.datetime "created_at"
     t.datetime "updated_at"
   end
 
@@ -86,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20100910130337) do
     t.string   "role"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => false
+  add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
 end

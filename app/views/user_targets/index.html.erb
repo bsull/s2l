@@ -1,0 +1,27 @@
+<h1>Listing user_targets</h1>
+
+<table>
+  <tr>
+    <th>Fiscal year</th>
+    <th>Q1</th>
+    <th>Q2</th>
+    <th>Q3</th>
+    <th>Q4</th>
+    <th></th>
+  </tr>
+
+<% @user_targets.each do |user_target| %>
+  <tr>
+    <td><%= user_target.fiscal_year %></td>
+    <td><%= user_target.q1 %></td>
+    <td><%= user_target.q2 %></td>
+    <td><%= user_target.q3 %></td>
+    <td><%= user_target.q4 %></td>
+    <td><%= link_to 'Edit', edit_user_target_path(user_target) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User target', new_user_target_path %>

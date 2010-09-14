@@ -11,7 +11,7 @@ class Account < ActiveRecord::Base
   has_many :customers
   has_many :confidences
   has_many :opportunities
-  # has_many :account_targets
+  has_many :account_targets
   
   before_save {|account| account.subdomain = account.subdomain.mb_chars.downcase.to_s}
 

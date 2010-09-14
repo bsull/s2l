@@ -1,0 +1,30 @@
+<%= form_for(@user_target) do |f| %>
+
+  <h5><%= legend %></h5>
+
+  <% if @user_target.errors.any? %>
+    <ul>
+      <% @user_target.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= f.label :fiscal_year, 'Fiscal year ending '+Date::MONTHNAMES.at(@current_account.fiscal_year_end)+':'%>
+  <%= select_year(@user_target.fiscal_year, {:field_name => 'fiscal_year'}) %>
+
+  <%= f.label :q1 %>
+  <%= f.text_field :q1 %>  
+
+  <%= f.label :q2 %>
+  <%= f.text_field :q2 %>
+
+  <%= f.label :q3 %>
+  <%= f.text_field :q3 %>
+
+  <%= f.label :q4 %>
+  <%= f.text_field :q4 %>
+
+  <%= f.submit %>
+
+<% end %>	

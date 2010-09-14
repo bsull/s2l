@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :nickname, :scope => :account_id, :case_sensitive => false
   
   belongs_to :account
+  has_many :opportunities
+  has_many :user_targets
+  
   
   attr_accessible :email, :password, :password_confirmation, :remember_me, :nickname, :time_zone, :role
   

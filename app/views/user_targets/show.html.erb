@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @user_target.user_id %>
+</p>
+
+<p>
+  <b>Fiscal year:</b>
+  <%= @user_target.fiscal_year %>
+</p>
+
+<p>
+  <b>Q1:</b>
+  <%= @user_target.q1 %>
+</p>
+
+<p>
+  <b>Q2:</b>
+  <%= @user_target.q2 %>
+</p>
+
+<p>
+  <b>Q3:</b>
+  <%= @user_target.q3 %>
+</p>
+
+<p>
+  <b>Q4:</b>
+  <%= @user_target.q4 %>
+</p>
+
+<p>
+  <b>Q2 cumulative:</b>
+  <%= @user_target.q2_cumulative %>
+</p>
+
+<p>
+  <b>Q3 cumulative:</b>
+  <%= @user_target.q3_cumulative %>
+</p>
+
+<p>
+  <b>Q4 cumulative:</b>
+  <%= @user_target.q4_cumulative %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_target_path(@user_target) %> |
+<%= link_to 'Back', user_targets_path %>
