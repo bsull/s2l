@@ -10,22 +10,22 @@ $(function () {
     $.plot($("#chart"), [
 
         {
-	        color: "#F5DE6F",
-	        label: "Targets",
+        	color: "#f5e17f",
+        	label: "Targets",
             data: d[0],
-            lines: { show: true, steps: true, fill: true, lineWidth: 0}
+            lines: { show: true, steps: true, lineWidth: 0, fill: .5 },
         },
         {
     	    color: "#9479EB",
 	        label: "Bookings",
             data: d[1],
-            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0 }
+            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0, fill: 1 }
         },
         {
     	    color: "#C5BAEB",	
 	        label: "Forecast",
             data: d[2],
-            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0 }
+            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0, fill: 1 }
         }
     ],
  { xaxis: 

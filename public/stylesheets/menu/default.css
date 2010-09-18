@@ -89,9 +89,9 @@
 		ul.dropdown a:link,
 		ul.dropdown a:visited { color: #fff; text-decoration: none;}
 		ul.dropdown a:hover {
-		 border-top-color: #C20C0C !important;
-		 border-left-color: #C20C0C;
-		 background-color: #A50808; /*#4498c7;*/
+		 border-top-color: #888 !important;
+		 border-left-color: #888;
+		 background-color: #555; /*#4498c7;*/
 		 color: #fff;
 		}
 
@@ -102,9 +102,9 @@
 		}
 
 		ul.dropdown a:active {
-		 border-top-color: #C20C0C !important;
-		 border-left-color: #C20C0C;
-		 background-color: #A50808; /*#4498c7;*/	
+		 border-top-color: #777 !important;
+		 border-left-color: #777;
+		 background-color: #555; /*#4498c7;*/	
 /*		 background: #058acf url(images/nav-sub-press.png) 0 0 repeat-x !important;*/
 		 color: #fff;
 		}
