@@ -30,13 +30,10 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	padding: 0;
 	border: 0;
 	outline: 0;
-/*	font-size: 100%; */
 	vertical-align: baseline;
 	background: transparent;
 }
-/*body {
-	line-height: 1;
-}*/
+
 ol, ul {
 	list-style: none;
 }
@@ -171,7 +168,7 @@ h4 {
 	line-height: 1.2857142857142858em;
 	margin-bottom: 1.2857142857142858em;
 }
-p, ul, blockquote, pre, td, th, label {
+p, ul, blockquote, pre, td, th {
 	margin: 0;
 	font-size: 1em;
 	line-height: 1.5em;
@@ -184,7 +181,6 @@ p.small {
 	margin-bottom: 1.8em;
 }
 table {
-	border-collapse: collapse;
 	margin-bottom: 1.5em;
 }
 
@@ -202,43 +198,39 @@ tbody tr:hover {
 	background:#F2F7F4;
 }
 
-/* Forms */
-legend {
-	font-weight:bold;
-	color:#333;
-}
-label {
-	display:block;
-}
-label.radio, label.check {
-	display:inline;
-	margin-left:.5em;
-}
+/*
+    Form Styles 
+    http://nidahas.com/sandbox/form_template_2.html
+*/
+
+div.form-container { margin: 0 10px 10px 10px; padding: 5px; /*border: #EEE 1px solid;*/ }
+div.form-container ul { color:#C20C0C; }
+
+p.legend { margin-bottom: 1em; }
+p.legend em { color: #C00; font-style: normal; }
+
+form p { margin: 0; }
+form p.note { margin-left: 170px; font-size: 90%; color: #333; }
+form fieldset { margin: 10px 0; padding: 10px; border: #DDD 1px solid; }
+form legend { font-weight: bold; color: #666; padding:0 1em; }
+form fieldset div { padding: 0.25em 0; }
+label { margin-right: 10px; padding-right: 10px; width: 150px; display: block; float: left; text-align: right; position: relative; }
+label.error, 
+span.error { color: #C00; }
+label em { position: absolute; right: 0; font-size: 120%; font-style: normal; color: #C00; }
+
+div.field_with_errors { margin:0;padding:0; }
+div.field_with_errors input { border-color: #C20C0C; }
+
+div.controlset label, 
+div.controlset input { display: inline; float: none; }
+div.controlset label.controlset { display: block; float: left; }
+div.controlset div { margin-left: 170px; }
+div.buttonrow { margin-left: 180px; }
 input[type="text"],
-input[type="password"],
+input[type="password"], 
 input[type="select"],
-input[type="search"], 
-select {
-	display:block;
-	color:#333;
-	height:20px;
-	width:220px;
-	margin-bottom:22px;
-	font-size:1em;
-	font-family:'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
-}
-form ul, form li {
-	color:#777;
-	font-family: 'Courier New', Courier,  monospace;
-	font-weight: bold;
-	margin-bottom:0;
-}
-div.field_with_errors input {
-	background:#FFE7E7;
-}
-input[type="submit"] {
-	padding:0 1em 0 1em;
-}
+input[type="search"] { font:1em/1.5em Arial,"Helvetica Neue", Helvetica, sans-serif; color: #333; border:1px solid #ddd; padding:0 5px;}
 
 /* Page Styles */
 
