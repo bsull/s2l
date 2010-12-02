@@ -5,7 +5,8 @@ class OpportunitiesController < ApplicationController
   authorize_resource
   
   def index
-    @opportunities = @current_account.opportunities.all
+    @opportunities = Opportunity.all
+    # render :json => @opportunities
   end
 
   def show

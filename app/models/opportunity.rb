@@ -1,5 +1,5 @@
 class Opportunity < ActiveRecord::Base
-  
+    
   validates_presence_of :status, :name
   validates_presence_of :order_value, :if => "status == 'forecast'"
   validates_associated :customer, :confidence
@@ -17,9 +17,14 @@ class Opportunity < ActiveRecord::Base
   
   STATUSES = %w[won lost dead forecast lead]
   
+  def as_json(options={})
+    ActiveRecord::Base.include_root_in_json = false
+    super(:only => [:name, :order_value, :order_date])
+  end
+  
   protected
   
-  # TODO Should figure how to work with the account's time zone to validate forecast dates.
+  # TODO Figure out how to work with the account's time zone to validate forecast dates.
   
   def forecasted_order_dates
     if status == 'forecast' and order_date.nil?
