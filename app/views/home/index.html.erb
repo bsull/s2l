@@ -1,4 +1,4 @@
-<div class="g640">
+<div class="g640 inside">
 <div id="chart" style="width:600px;height:300px;margin-right:auto;margin-left:auto;"></div> 
 <script id="source" language="javascript" type="text/javascript"> 
 $(function () {
@@ -10,19 +10,19 @@ $(function () {
     $.plot($("#chart"), [
 
         {
-        	color: "#f5e17f",
+        	color: "#333",
         	label: "Targets",
             data: d[0],
-            lines: { show: true, steps: true, lineWidth: 0, fill: .5 }
+            lines: { show: true, steps: true, lineWidth: 0, fill: .25 }
         },
         {
-    	    color: "#9479EB",
+    	    color: "#333",
 	        label: "Bookings",
             data: d[1],
             bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0, fill: 1 }
         },
         {
-    	    color: "#C5BAEB",	
+    	    color: "#c20c0c",	
 	        label: "Forecast",
             data: d[2],
             bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0, fill: 1 }
@@ -35,6 +35,16 @@ $(function () {
 	 ticks: 5 }});
 });
 </script>
+</div>
+<div class="g320" style="margin-top:1em;">
+	<h3 style="color:#444;">Bookings & Forecast vs. Target</h3>
+Bookings <br>	
+Forecast <br>	
+Target <br>	
+Weighted <br>	
+Include Stale <br>	
+</div>
+<div class="clear">&nbsp;</div>	
 
 <table>
   <caption>Recent Wins</caption>
@@ -59,7 +69,7 @@ $(function () {
 
 
 </div> 
-<div class="g320" style="background:grey"><table>
+<div class="g320" style="background:#eee; padding:1em; border:1px solid #ddd"><table>
   <caption>New to the Forecast</caption>
 	<% @recent_forecast.each do |opportunity| %>
 	  <tr>

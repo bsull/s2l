@@ -1,0 +1,11 @@
+<h2 class='form_heading'>Edit Profile</h2>
+<%= form_for @user, :url => profile_path, :html => {:method => "post"} do |f| %>
+	<div class='row'><%= f.label :nickname %><%= f.text_field :nickname, :class =>'initial-focus' %></div>  
+	<div class='row'><%= f.label :email %><%= f.text_field :email %></div>
+	<div class='row'>
+      <%= f.label :time_zone %>
+	  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)", :include_blank => false %>
+	</div>
+	<div class='row'><%= f.submit "Update Profile" %></div>
+<% end %>
+<%= link_to 'change password', password_path, :class => 'hint' %>

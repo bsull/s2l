@@ -1,5 +1,29 @@
-<h1>New user</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', users_path %>
+<h2 class='form_heading'>New User</h2>
+<%= form_for @user do |f| %>
+	<div class='row'><%= f.label :nickname %><%= f.text_field :nickname, :class =>'initial-focus' %></div>  
+	<div class='row'><%= f.label :email %><%= f.text_field :email %></div>
+	<div class='row'><%= f.label :password %><%= f.text_field :password %></div>
+	<div class='row'>
+      <%= f.label :time_zone %>
+	  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)", :include_blank => false %>
+	</div>
+	<div class='row'>
+	  <%= f.label :role %>
+	  <div class='radio'>
+		<% User::ROLES.each do |role| %>
+	      <%= f.radio_button :role, role %>
+	      <%= f.label :role, role.to_s.humanize, :value => role, :class => "radio" %><br>
+	    <% end %>
+	  </div>
+	</div>	
+	<div class='row'>
+	  <%= f.label :enabled, 'Account status' %>
+	  <div class='radio'>
+	      <%= f.radio_button :enabled, 'true' %>
+	      <%= f.label :enabled, 'Active', :value => 'true', :class => "radio" %><br>
+	      <%= f.radio_button :enabled, 'false' %>
+	      <%= f.label :enabled, 'Inactive', :value => 'false', :class => "radio" %><br>
+	  </div>
+	</div>
+	<div class='row'><%= f.submit %></div>
+<% end %>

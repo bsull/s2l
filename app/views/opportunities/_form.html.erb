@@ -1,50 +1,33 @@
-<div class="g480 form-container">
-
-  <% if @opportunity.errors.any? %>
-    <ul>
-  	  <% @opportunity.errors.full_messages.each do |msg| %>
-	    <li><%= msg %></li>
+<%= form_for @opportunity do |f| %>
+  
+  <%= fields_for :customer, @opportunity.customer do |c| %>
+    <div class='row'><%= c.label :name, "Customer" %><%= c.text_field :name %></div>
+  <% end %>
+  
+  <div class='row'><%= f.label :name, 'Opportunity' %><%= f.text_field :name %></div>
+  <div class='row'><%= f.label :order_value %><%= f.text_field :order_value %></div>
+  <div class='row'><%= f.label :order_date %><%= f.text_field :order_date %></div>
+  <div class='row'>
+    <%= f.label :status %>
+	<div class='radio'>
+      <% Opportunity::STATUSES.each do |status| %>
+	    <%= f.radio_button :status, status %>
+	    <%= f.label :status, status.to_s.humanize, :value => status, :class => "radio" %><br>
 	  <% end %>
-    </ul>
-  <% end %>
+    </div>
+  </div>
 
-  <%= form_for @opportunity do |f| %>
-    <fieldset>
-      <legend><%= legend %></legend>
-      
-      <%= fields_for :customer, @opportunity.customer do |c| %>
-        <div><%= c.label :name, "Customer" %><%= c.text_field :name %></div>
-      <% end %>
+  <div class='row'>
+    <%= f.label :confidence %>
+	<div class='radio'>
+      <% @confidences.each do |confidence| %>
+	    <%= f.radio_button :confidence_id, confidence.id %>
+	    <%= f.label :confidence_id, confidence.weight.to_s+'% - '+confidence.name, :value => confidence.id, :class => "radio"%><br>
+	  <% end %>
+    </div>
+  </div>
+  
+  <div class='row'><%= f.submit %><input type="button" value="Discard" class="button"></div>
 
-      <div><%= f.label :name, 'Opportunity'%><%= f.text_field :name %></div>
+<% end %>
 
-      <div><%= f.label :order_value %><%= f.text_field :order_value %></div>
-
-      <div><%= f.label :order_date %><%= f.text_field :order_date %></div>
-
-	  <div class="controlset">
-	    <label class="controlset">Status</label>
-	    <div>
-		  <% Opportunity::STATUSES.each do |status| %>
-	        <%= f.radio_button :status, status %>
-	        <%= f.label :status, status.to_s.humanize, :value => status, :class => "radio" %><br>
-	      <% end %>
-        </div>
-      </div>
-
-	  <div class="controlset">
-	    <label class="controlset">Confidence</label>
-	    <div>
-		    <% @confidences.each do |confidence| %>
-	        <%= f.radio_button :confidence_id, confidence.id %>
-	        <%= f.label :confidence_id, confidence.weight.to_s+'% - '+confidence.name, :value => confidence.id, :class => "radio"%><br>
-	      <% end %>
-        </div>
-      </div>
-    </fieldset>
-    <div class="buttonrow">
-		<%= f.submit %>
-		<input type="button" value="Discard" class="button">
-	</div>
-  <% end %>
-</div>

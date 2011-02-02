@@ -8,13 +8,13 @@ class User < ActiveRecord::Base
   has_many :user_targets
   
   
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :nickname, :time_zone, :role
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :nickname, :time_zone, :role, :enabled
   
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable :registerable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable  
 
   
-  ROLES = %w[associate salesman administrator]
+  ROLES = %w[administrator salesman associate]
   
 end

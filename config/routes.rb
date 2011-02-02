@@ -14,7 +14,8 @@ S2l::Application.routes.draw do
   get "home/index"
   
   match 'sign_up' => 'users#sign_up', :as => :sign_up
-  match 'user_profile' => 'users#change_profile', :as => :profile
+  match 'edit_profile' => 'users#edit_profile', :as => :profile
+  match 'change_password' => 'users#change_password', :as => :password
   match 'account_settings' => 'accounts#change_settings', :as => :settings
   match 'home' => 'home#index', :as => :home
   match 'my_sales2l' => 'my_sales2l#index', :as => :my_sales2l

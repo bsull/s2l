@@ -1,31 +1,13 @@
+<h2 class='form_heading'>User Signup</h2>
 <%= form_for @user, :url => sign_up_path, :html => {:method => "post"} do |f| %>
-
-  <h3>Sign Up</h3>
-
-  <% if @user.errors.any? %>
-    <ul>
-  	  <% @user.errors.full_messages.each do |msg| %>
-	    <li><%= msg %></li>
-	  <% end %>
-    </ul>
-  <% end %>
-
-  <%= f.label :nickname %>
-  <%= f.text_field :nickname %>
-
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-
-  <%= f.label :password %>
-  <%= f.password_field :password %>
-
-  <%= f.label :password_confirmation, "Confirm Password" %>
-  <%= f.password_field :password_confirmation %>
-
+  <div class='row'><%= f.label :nickname %><%= f.text_field :nickname, :class =>'initial-focus' %></div>  
+  <div class='row'><%= f.label :email %><%= f.text_field :email %></div>
+  <div class='row'><%= f.label :password %><%= f.password_field :password %></div>
+  <div class='row'><%= f.label :password_confirmation, 'Confirm password' %><%= f.password_field :password_confirmation %></div>
+  <div class='row'>
+    <%= f.label :time_zone %>
+    <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Pacific Time (US & Canada)", :include_blank => false %>
+  </div>
   <%= f.hidden_field :account_id, :value => @current_account.id %>
-
-  <p>
-    <%= submit_tag "Sign Up" %>
-  </p>
-
+  <div class='row'><%= f.submit %></div>
 <% end %>

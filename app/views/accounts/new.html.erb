@@ -1,5 +1,9 @@
-<h1>New account</h1>
+<%= form_for(@account) do |f| %>
 
-<%= render 'form' %>
 
-<%= link_to 'Back', accounts_path %>
+
+    Pick a name for your sales team:<br />
+    <%= f.text_field :subdomain %>.sales2L.com<br />
+
+    <%= f.submit %>
+<% end %>

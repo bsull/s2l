@@ -24,3 +24,11 @@ $(function() {
     });
 });
 
+jQuery(function(){
+	jQuery('ul.sf-menu').superfish();
+});
+
+$(document).ready( function() {
+   $('input.initial-focus:first').focus(); // choose first just in case
+});
+

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   
   protect_from_forgery
-  layout 'golden'
+  layout 'red'
   
   before_filter :set_current_account
   before_filter :authenticate_user!
