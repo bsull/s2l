@@ -10,6 +10,7 @@ S2l::Application.routes.draw do
   resources :customers
   resources :confidences
   resources :opportunities
+  resources :account_targets
 
   get "home/index"
   

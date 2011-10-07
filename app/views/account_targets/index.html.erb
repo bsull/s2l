@@ -2,22 +2,24 @@
 	<caption>Account Targets</caption>
 	<thead>
 		<tr>
+			<th>Fiscal Year</th>			
 			<th>1st Quarter</th>
 			<th>2nd Quarter</th>
 			<th>3rd Quarter</th>
 			<th>4th Quarter</th>
-			<th>Fiscal Year</th>
-			<th> </th>
+			<% if can? :update, AccountTarget %> 
+			  <th> </th>
+			<% end %>
 		</tr>
 	</thead>
 	<tbody> 
 		<% @account_targets.each do |account_target| %>
 		  <tr>
+			<td><%= account_target.fiscal_year %></td>
 			<td><%= account_target.q1 %></td>
 			<td><%= account_target.q2 %></td>
 			<td><%= account_target.q3 %></td>
 			<td><%= account_target.q4 %></td>
-			<td><%= account_target.fiscal_year %></td>
 			<% if can? :update, AccountTarget %> 
 			  <td><%= link_to "edit", edit_account_target_path(account_target) %></td>
 			<% end %>

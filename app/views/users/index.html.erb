@@ -1,15 +1,23 @@
 <h1>Users</h1>
 <table>
   <tr>
-    <th>Nickname</th>
+    <th><%= sort_link @search, :nickname %></th>
     <th>Email</th>
-    <th>Role</th>
+    <th><%= sort_link @search, :role_and_nickname, 'Role' %></th>
+    <th><%= sort_link @search, :enabled_and_nickname, 'Status' %></th>
   </tr>
   <% @users.each do |user| %>
-  <tr>	
+  <% if user.enabled? %><tr><% else %><tr class="inactive"><% end %>	
     <td><%= link_to user.nickname, user %></td>
     <td><%= user.email %></td>
     <td><%= user.role %></td>
+    <td>
+      <% if user.enabled? %>
+	    Active
+	  <% else %>
+	    Inactive
+	  <% end %>
+	</td>
     <% if can? :manage, User %>
       <td><%= link_to 'edit', edit_user_path(user) %></td>
     <% end %>

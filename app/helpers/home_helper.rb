@@ -22,9 +22,11 @@ module HomeHelper
   def account_targets(account, last_year_begin, next_year_end)  
     targets = account.account_targets.order('fiscal_year ASC')
     values = targets.collect{|t| [t.q1, t.q1+t.q2, t.q1+t.q2+t.q3, t.q1+t.q2+t.q3+t.q4]}.flatten!
+    values.push(values.last)
     years = targets.collect{|t| Date.new(t.fiscal_year, t.account.fiscal_year_end)-11.months}
     quarters = []
     years.each{|d| quarters<<d<<d+3.months<<d+6.months<<d+9.months}
+    quarters.push(quarters.last + 3.months)
     quarters.collect!{|q| q.to_time.to_i * 1000 }
     series = []<<quarters<<values
     series.transpose
@@ -57,7 +59,7 @@ module HomeHelper
       default[d] = 0
       d+=1.month
     end    
-    opportunities = account.opportunities.select('order_date, order_value').where('status = ? AND order_date <= ?', 'forecast', next_year_end)
+    opportunities = account.opportunities.select('order_date, order_value').where('status = ? AND order_date >= ?', 'forecast', Date.today.beginning_of_month)
     forecast = {}
     opportunities.group_by{|o| o.order_date.beginning_of_month}.each{|k, v| forecast[k] = v.sum(&:order_value).to_i}
     monthly_forecast = default.merge(forecast).sort
@@ -71,3 +73,6 @@ module HomeHelper
     return series
   end
 end
+
+
+

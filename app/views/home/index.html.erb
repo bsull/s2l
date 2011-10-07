@@ -1,48 +1,27 @@
 <div class="g640 inside">
 <div id="chart" style="width:600px;height:300px;margin-right:auto;margin-left:auto;"></div> 
 <script id="source" language="javascript" type="text/javascript"> 
-$(function () {
-	
+  $(function () {
 	var d = <%= home_chart(@current_account).to_json %>;
-
-	
-	
-    $.plot($("#chart"), [
-
-        {
-        	color: "#333",
-        	label: "Targets",
-            data: d[0],
-            lines: { show: true, steps: true, lineWidth: 0, fill: .25 }
-        },
-        {
-    	    color: "#333",
-	        label: "Bookings",
-            data: d[1],
-            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0, fill: 1 }
-        },
-        {
-    	    color: "#c20c0c",	
-	        label: "Forecast",
-            data: d[2],
-            bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: 0, fill: 1 }
-        }
-    ],
- { xaxis: 
-	{mode: "time",
-	 min: d[3],
-	 max: d[4],
-	 ticks: 5 }});
-});
+	var data = [	  
+	  { label: "Bookings", data: d[1], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#333" },
+	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#c20c0c" },
+	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .25 }, color: "#333" }
+	];
+    $.plot($("#chart"), data, {
+	  xaxis: { mode: "time", min: d[3], max: d[4], ticks: 5 },
+	  legend: { show: false }
+    });
+  });
 </script>
 </div>
 <div class="g320" style="margin-top:1em;">
-	<h3 style="color:#444;">Bookings & Forecast vs. Target</h3>
-Bookings <br>	
-Forecast <br>	
-Target <br>	
-Weighted <br>	
-Include Stale <br>	
+	<h1>
+		<span style="color:#333">Bookings</span><br>
+		<span style="color:#c20c0c">Forecast</span><br>
+		<span style="color:#bbb">Targets</span>
+	</h1>	
+	<%= link_to 'Set Targets', account_targets_path %>
 </div>
 <div class="clear">&nbsp;</div>	
 

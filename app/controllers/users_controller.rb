@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   skip_before_filter :authenticate_user!, :only => :sign_up
   
   def index
-    @users = @current_account.users.all
+    @search = @current_account.users.search(params[:search])
+    @users = params[:search] ? @search.all : @current_account.users.order("nickname ASC")
   end
 
   def show
