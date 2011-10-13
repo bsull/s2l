@@ -4,9 +4,9 @@
   $(function () {
 	var d = <%= home_chart(@current_account).to_json %>;
 	var data = [	  
-	  { label: "Bookings", data: d[1], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#333" },
-	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#c20c0c" },
-	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .25 }, color: "#333" }
+	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .3 }, color: "#333" },
+	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#C20C0C" },
+	  { label: "Bookings", data: d[1], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#333" }
 	];
     $.plot($("#chart"), data, {
 	  xaxis: { mode: "time", min: d[3], max: d[4], ticks: 5 },
@@ -19,7 +19,7 @@
 	<h1>
 		<span style="color:#333">Bookings</span><br>
 		<span style="color:#c20c0c">Forecast</span><br>
-		<span style="color:#bbb">Targets</span>
+		<span style="color:#B2B2B2">Targets</span>
 	</h1>	
 	<%= link_to 'Set Targets', account_targets_path %>
 </div>

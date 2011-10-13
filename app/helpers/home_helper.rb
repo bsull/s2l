@@ -14,7 +14,7 @@ module HomeHelper
     
     targets = account_targets(account, last_year_begin, next_year_end)
     bookings = account_bookings(account, last_year_begin)
-    forecast = account_forecast(account, next_year_end, bookings)
+    forecast = account_forecast(account, last_year_begin, next_year_end, bookings)
 
     data = [] << targets << bookings << forecast << chart_begin.to_time.to_i * 1000 << chart_end.to_time.to_i * 1000
   end
@@ -52,22 +52,26 @@ module HomeHelper
     series.transpose
   end
   
-  def account_forecast(account, next_year_end, bookings)
+  def account_forecast(account, last_year_begin, next_year_end, bookings)
     default = {}
-    d = Time.now.utc.to_date.beginning_of_month
+    d = last_year_begin
     while d < next_year_end
       default[d] = 0
       d+=1.month
     end    
-    opportunities = account.opportunities.select('order_date, order_value').where('status = ? AND order_date >= ?', 'forecast', Date.today.beginning_of_month)
+    opportunities = account.opportunities.select('order_date, order_value').where('status = ? AND order_date >= ? AND order_date <= ?', 'forecast', last_year_begin, next_year_end)
     forecast = {}
     opportunities.group_by{|o| o.order_date.beginning_of_month}.each{|k, v| forecast[k] = v.sum(&:order_value).to_i}
     monthly_forecast = default.merge(forecast).sort
     monthly_totals = monthly_forecast.collect{|f| f[1]}
+    old_forecast = []
+    first_period = monthly_totals.first((Date.today.month - last_year_begin.month) + 12)
+    first_period.each_with_index{|t, i| old_forecast << (t + bookings[i][1])}
+    sum = bookings.flatten.last and this_year = monthly_totals.slice(first_period.length..23).collect{|t| (sum += t)}
     sum = 0 and next_year = monthly_totals.last(12).collect{|t| (sum += t)}
-    sum = bookings.flatten.last and this_year = monthly_totals.slice(0..(monthly_totals.length - 13)).collect{|t| (sum += t)}
     x = monthly_forecast.collect{|d| d[0].to_time.to_i * 1000}
-    y = this_year + next_year
+    y = []<<old_forecast<<this_year<<next_year
+    y.flatten!
     series = []
     y.each_with_index{|top, i| series << [ x[i], top, top - monthly_totals[i] ] }
     return series
