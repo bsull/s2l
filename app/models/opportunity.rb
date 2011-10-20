@@ -17,10 +17,10 @@ class Opportunity < ActiveRecord::Base
   
   STATUSES = %w[won lost dead forecast lead]
   
-  def as_json(options={})
     ActiveRecord::Base.include_root_in_json = false
-    super(:only => [:name, :order_value, :order_date])
-  end
+  # def as_json(options={})
+  #   super(:only => [:name, :order_value, :order_date])
+  # end
   
   protected
   

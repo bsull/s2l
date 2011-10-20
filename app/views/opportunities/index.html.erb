@@ -5,17 +5,17 @@
 		var grid;
  
 		var columns = [
-			{id:"name", name:"Title", field:"name"},
-			{id:"order_value", name:"Duration", field:"order_value"}
+			{id:"name", name:"Title", field:"name", sortable:true },
+			{id:"order_value", name:"Duration", field:"order_date"}
 		];
  
 		var options = {
 			enableCellNavigation: false,
             enableColumnReorder: false
 		};
- 
+ var data = <%=raw @opportunities.to_json -%>;
 		$(function() {
-            var data = <%== @opportunities.to_json %>;
+            
 
 			grid = new Slick.Grid($("#myGrid"), data, columns, options);
 		})

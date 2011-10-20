@@ -402,7 +402,7 @@ table.center {
 */
 .form_heading {
   float: left;
-  width: 140px;
+  width: 200px;
   text-align: right;
   margin-right:10px;
 }
@@ -421,7 +421,7 @@ form div.row {
 
 form label {
   float: left;
-  width: 140px;
+  width: 180px;
   text-align: right;
   margin: 0px 10px 0px 0px;
 /*  font-weight: bold;*/
@@ -446,15 +446,15 @@ form div.radio {
 }
 
 form input[type='checkbox'] {
-	margin-left: 153px;
+	margin-left: 193px;
 }
 
 form input[type='submit'] {
 	display: inline-block;
-	margin-left: 153px;
+	margin-left: 193px;
 }
 .hint {
-	margin-left: 153px;
+	margin-left: 193px;
 }
 .inactive {
     background-color: #EEE;
