@@ -5,6 +5,6 @@ gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'devise'
 gem 'cancan', :git => 'git://github.com/ryanb/cancan.git'
 gem "meta_search"
-
+gem 'hirb'
 
 

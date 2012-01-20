@@ -1,24 +1,27 @@
-<div id="myGrid" style="width:600px;height:500px;"></div>
-
-<script> 
- 
-		var grid;
- 
-		var columns = [
-			{id:"name", name:"Title", field:"name", sortable:true },
-			{id:"order_value", name:"Duration", field:"order_date"}
-		];
- 
-		var options = {
-			enableCellNavigation: false,
-            enableColumnReorder: false
-		};
- var data = <%=raw @opportunities.to_json -%>;
-		$(function() {
-            
-
-			grid = new Slick.Grid($("#myGrid"), data, columns, options);
-		})
- 
-		</script>
+<table>
+	<caption>Opportunities</caption>
+	<thead>
+		<tr>
+			<th><%= sortable "opportunity.customer.name", "Customer" %></th>
+			<th><%= sortable "name", "Opportunity" %></th>
+			<th>Status</th>
+			<th>Order Value</th>
+			<th>Last Update</th>
+			<th>Owner</th>
+		</tr>
+	</thead>
+	<tfoot></tfoot>
+	<tbody>
+		<% @opportunities.each do |opportunity| %>
 		
+		<tr>
+			<td><%= opportunity.customer.name %></td>
+			<td><%= opportunity.name %></td>
+			<td><%= opportunity.status %></td>
+			<td><%= number_to_currency(opportunity.order_value) %></td>
+			<td><%= opportunity.updated_at.to_date %></td>
+			<td><%= opportunity.user.nickname %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

@@ -1,6 +1,7 @@
 class AccountTarget < ActiveRecord::Base
   
-  validates_presence_of :account_id, :fiscal_year, :q1, :q2, :q3, :q4
+  validates_presence_of :account_id, :q1, :q2, :q3, :q4
+  validates_numericality_of :fiscal_year, :q1, :q2, :q3, :q4
   validates_uniqueness_of :fiscal_year, :scope => :account_id
   
   belongs_to :account

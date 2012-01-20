@@ -3,6 +3,8 @@ require 'subdomain'
 S2l::Application.routes.draw do
 
 
+  get "forecast/index"
+
   devise_for :users
 
   resources :accounts
@@ -19,6 +21,7 @@ S2l::Application.routes.draw do
   match 'change_password' => 'users#change_password', :as => :password
   match 'account_settings' => 'accounts#change_settings', :as => :settings
   match 'home' => 'home#index', :as => :home
+  match 'forecast' => 'forecast#index', :as => :forecast
   match 'my_sales2l' => 'my_sales2l#index', :as => :my_sales2l
 
   constraints(Subdomain) do

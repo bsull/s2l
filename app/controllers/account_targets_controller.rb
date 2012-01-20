@@ -17,7 +17,7 @@ class AccountTargetsController < ApplicationController
   end
 
   def create
-    @account_target = @current_account.account_targets.new(params[:account_target].merge!(params[:date])) 
+    @account_target = @current_account.account_targets.new(params[:account_target]) 
     if @account_target.save
       redirect_to(account_targets_url, :notice => 'Account target created.')
     else
@@ -27,7 +27,7 @@ class AccountTargetsController < ApplicationController
 
   def update
     @account_target = @current_account.account_targets.find(params[:id])
-    if @account_target.update_attributes(params[:account_target].merge!(params[:date]))
+    if @account_target.update_attributes(params[:account_target])
       @account_target.save!
       redirect_to(account_targets_url, :notice => 'Account target updated.')
     else

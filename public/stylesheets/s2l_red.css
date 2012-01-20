@@ -279,6 +279,7 @@ h1, h2, h3, h4, h5, h6 {
 	text-align:right;
 	margin:0px 7px 10px 0px;
 	color:#333;
+	font-weight:bold;
 }
 #quicklinks a:link{
 	margin-left:8px;
@@ -289,11 +290,8 @@ h1, h2, h3, h4, h5, h6 {
 #quicklinks a:hover{color:#333; text-decoration:underline;}
 #nav {
 	float:right;
-	border-top:1px dotted #333;
+	border-top:1px solid #444;
 	margin-bottom:0px;
-/*	background: #598A9E;
-	border-top:1px solid #fff;
-    margin-bottom:2em;*/
 }
 #flash_notice {
 	color:#007000;
@@ -313,18 +311,18 @@ li {
 	margin-left: 2em;
 }
 a {
-	font-weight:bold;
-	color:	#3a6eca;
+/*	font-weight:bold;*/
+	color:	#0C0CC0;
+/*	color:	#3a6eca;*/
 	text-decoration:none;
 }
-a:visited {color:#3a6eca;}
-a:hover {color:#3a6eca;text-decoration:underline;}
-/*table {
-	margin: 0;
-	font-size: 1.1428571428571428em;
-	line-height: 1.3125em;
-	margin-bottom: 1.3125em;
-}*/
+a:visited {color:#0C0CC0;}
+a:hover {color:#0C0CC0;text-decoration:underline;}
+
+
+/*	
+	tables
+*/
 table caption {
 	text-align:left;
 	font-weight:bold;
@@ -333,17 +331,36 @@ table caption {
 	line-height: 1.05em;
 	margin-bottom: 1.05em;
 }
-th {
-	background:#EEE;
-	border:1px solid #DDD;
-	padding:.25em 1em;
+thead {
+	margin: 0;
+	font-size: 0.8571428571428571em;
+	line-height: 1.75em;
+	margin-bottom: 1.75em;	
+	background:#444;
+	border-bottom:1px dotted #444;
 }
+th, th a, th a:visited {
+	font-weight:bold;
+	color:	#fff;
+	text-decoration:none;	
+	padding: .2em 1em;
+}
+th a:hover {
+	font-weight:bold;
+	color:	#fff;
+	text-decoration:underline;	
+	padding: .2em 1em;
+}
+
 td {
-	border:1px dotted #DDD;
 	padding:.25em 1em;
+	border-top:1px dotted #333;
+	border-bottom:1px dotted #333;
 }
-tr:hover {
-	background:#fdf5de;
+tbody tr:hover {
+	background:#C2C2C2;
+/*	background:#CFCEC4;*/
+/*	background:#F5F5F5;*/
 }
 table.center {
     margin-left:auto; 
@@ -411,12 +428,14 @@ form div.row {
 	margin-bottom: 1em;
 }
 .field_error input {
-	background-color:#fde1e1;
+	border: 1px solid #c20c0c;
+
+/*	background-color:#fde1e1;*/
 }
 
 .error_message {
 	color:#c20c0c;
-	margin-left: 153px;
+	margin-left: 193px;
 }
 
 form label {

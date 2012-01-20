@@ -1,0 +1,35 @@
+<%= form_for @search, :url => forecast_path, :html => {:method => :get} do |f| %>
+  <%= f.label :customer_name, "Customer" %>
+  <%= f.text_field :customer_name_like %><br />
+  <%= f.label :name, "Opportunity" %>
+  <%= f.text_field :name_like %><br />
+  <%= f.submit %>
+<% end %>
+
+<table>
+	<caption>Forecast</caption>
+	<thead>
+		<tr>
+			<th><%= sort_link @search, :customer_name, "Customer", {}, :class => "customer" %></th>
+			<th><%= sort_link @search, :name, "Opportunity" %></th>
+			<th><%= sort_link @search, :order_value %></th>
+			<th><%= sort_link @search, :order_date, "Order Date" %></th>
+			<th><%= sort_link @search, :confidence_name, "Confidence", {}, :class => 'confidence' %></th>
+			<th><%= sort_link @search, :user_nickname, "Owner", {}, :class => 'user' %></th>
+		</tr>
+	</thead>
+	<tfoot></tfoot>
+	<tbody>
+		<% @opportunities.each do |opportunity| %>
+		
+		<tr>
+			<td><%= opportunity.customer.name %></td>
+			<td><%= opportunity.name %></td>
+			<td style="text-align:right"><%= number_to_currency(opportunity.order_value, :precision => 0) %></td>
+			<td><%= opportunity.order_date.to_date %></td>
+			<td><%= opportunity.confidence.name %></td>
+			<td><%= opportunity.user.nickname %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>

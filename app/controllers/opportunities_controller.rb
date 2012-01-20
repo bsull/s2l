@@ -1,11 +1,12 @@
 class OpportunitiesController < ApplicationController
+  helper_method :sort_column, :sort_direction
   
   before_filter :setup, :except => [:index, :show]
   
   authorize_resource
   
   def index
-    @opportunities = Opportunity.all
+    @opportunities = Opportunity.order(sort_column + " " + sort_direction)
     # render :json => @opportunities
   end
 
@@ -57,4 +58,11 @@ class OpportunitiesController < ApplicationController
     @confidences = @current_account.confidences.where(:enabled => true).order("weight DESC").all
   end
   
+  def sort_column
+    %w[name customer.name].include?(params[:sort]) ? params[:sort] : "name"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 end
