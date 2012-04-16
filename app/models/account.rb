@@ -11,8 +11,12 @@ class Account < ActiveRecord::Base
   has_many :customers
   has_many :confidences
   has_many :opportunities
-  has_many :account_targets
+  has_many :targets, :as => :targetable
   
   before_save {|account| account.subdomain = account.subdomain.mb_chars.downcase.to_s}
+  
+  def account_check(current_account)
+    id == current_account.id
+  end
 
 end

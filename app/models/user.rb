@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   
   belongs_to :account
   has_many :opportunities
-  has_many :user_targets
+  has_many :targets, :as => :targetable
   
   
   attr_accessible :email, :password, :password_confirmation, :remember_me, :nickname, :time_zone, :role, :enabled
@@ -14,7 +14,10 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable, :lockable and :timeoutable :registerable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable  
 
-  
   ROLES = %w[administrator salesman associate]
+  
+  def account_check(current_account)
+    account.id == current_account.id
+  end
   
 end

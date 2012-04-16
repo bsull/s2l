@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  fiscal_year: 1
+  q1: 1
+  q2: 1
+  q3: 1
+  q4: 1
+  targetable_type: MyString
+  targetable_id: 1
+
+two:
+  fiscal_year: 1
+  q1: 1
+  q2: 1
+  q3: 1
+  q4: 1
+  targetable_type: MyString
+  targetable_id: 1

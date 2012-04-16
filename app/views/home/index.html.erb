@@ -2,7 +2,7 @@
 <div id="chart" style="width:600px;height:300px;margin-right:auto;margin-left:auto;"></div> 
 <script id="source" language="javascript" type="text/javascript"> 
   $(function () {
-	var d = <%= home_chart(@current_account).to_json %>;
+	var d = <%= bft_chart(@current_account).to_json %>;
 	var data = [	  
 	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .3 }, color: "#333" },
 	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#C20C0C" },
@@ -21,7 +21,8 @@
 		<span style="color:#c20c0c">Forecast</span><br>
 		<span style="color:#B2B2B2">Targets</span>
 	</h1>	
-	<%= link_to 'Set Targets', account_targets_path %>
+
+	<%= link_to 'Set Targets', polymorphic_path([@current_account, :targets]) %>
 </div>
 <div class="clear">&nbsp;</div>	
 

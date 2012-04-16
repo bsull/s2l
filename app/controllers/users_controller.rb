@@ -52,7 +52,7 @@ class UsersController < ApplicationController
       @user.role = 'administrator'
       @user.enabled = true
       if @user.save
-        UserTarget.defaults(@user)
+        Target.defaults(@user, 500000)
         sign_in :user, @user # session[:user_id] = @user.id
         redirect_to home_url
       else

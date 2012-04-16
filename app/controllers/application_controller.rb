@@ -16,3 +16,13 @@ class ApplicationController < ActionController::Base
   end
   
 end
+
+# TODO Clean out old x_targets stuff
+# TODO Add products and line items for opportunities
+# TODO Add catagories for opportunities
+# TODO Add filters and sorts to all tables
+# TODO Build opportunity detail with history
+# TODO Build Journal
+# TODO Work out stale strategy, cron job?
+
+

@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Fiscal year:</b>
+  <%= @target.fiscal_year %>
+</p>
+
+<p>
+  <b>Q1:</b>
+  <%= @target.q1 %>
+</p>
+
+<p>
+  <b>Q2:</b>
+  <%= @target.q2 %>
+</p>
+
+<p>
+  <b>Q3:</b>
+  <%= @target.q3 %>
+</p>
+
+<p>
+  <b>Q4:</b>
+  <%= @target.q4 %>
+</p>
+
+<p>
+  <b>Targetable type:</b>
+  <%= @target.targetable_type %>
+</p>
+
+<p>
+  <b>Targetable:</b>
+  <%= @target.targetable_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_target_path(@target) %> |
+<%= link_to 'Back', targets_path %>
