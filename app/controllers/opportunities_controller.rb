@@ -18,6 +18,7 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.new
     @opportunity.status = 'lead'
     @opportunity.confidence = @confidences.last
+    3.times { @opportunity.line_items.build }
   end
 
   def edit
@@ -56,6 +57,7 @@ class OpportunitiesController < ApplicationController
   
   def setup
     @confidences = @current_account.confidences.where(:enabled => true).order("weight DESC").all
+    @products = @current_account.products.all
   end
   
   def sort_column

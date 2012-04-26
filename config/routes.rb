@@ -6,6 +6,9 @@ S2l::Application.routes.draw do
 
 
 
+
+
+
   devise_for :users
 
   match 'sign_up' => 'users#sign_up', :as => :sign_up
@@ -26,7 +29,9 @@ S2l::Application.routes.draw do
   resources :users do
     resources :targets
   end
-  
+
+  # resources :line_items
+  resources :products
   resources :customers
   resources :confidences
   resources :opportunities

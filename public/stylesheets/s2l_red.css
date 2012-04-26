@@ -358,7 +358,9 @@ td {
 	border-bottom:1px dotted #333;
 }
 tbody tr:hover {
-	background:#C2C2C2;
+	background:#FFF5D6;
+/*	background:#f1fff7;*/
+/*	background:#C2C2C2;*/
 /*	background:#CFCEC4;*/
 /*	background:#F5F5F5;*/
 }
@@ -464,6 +466,13 @@ form div.radio {
 	display: inline-block;
 }
 
+form div.line_items {
+	display: inline-block;
+}
+
+form .fields {
+	margin-bottom: 1em;
+}
 form input[type='checkbox'] {
 	margin-left: 193px;
 }

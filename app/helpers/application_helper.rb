@@ -24,4 +24,5 @@ module ApplicationHelper
 
     data = [] << Target.bft_chart(owner, fiscal_year_end) << bookings << forecast << chart_begin.to_time.to_i * 1000 << chart_end.to_time.to_i * 1000
   end
+  
 end

@@ -1,12 +1,25 @@
-<%= form_for @opportunity do |f| %>
+<%= nested_form_for @opportunity do |f| %>
   
   <%= fields_for :customer, @opportunity.customer do |c| %>
     <div class='row'><%= c.label :name, "Customer" %><%= c.text_field :name %></div>
   <% end %>
   
   <div class='row'><%= f.label :name, 'Opportunity' %><%= f.text_field :name %></div>
-  <div class='row'><%= f.label :order_value %><%= f.text_field :order_value %></div>
   <div class='row'><%= f.label :order_date %><%= f.text_field :order_date %></div>
+  
+  <div class='row'>
+    <%= f.label :line_items, "Line Items" %>
+    <div class='line_items'>
+      <%= f.fields_for :line_items do |l| %>
+         <%= l.text_field :value, :class => 'add_me_up' %> <%= l.collection_select(:product_id, @products, :id, :name, {:include_blank => "Select Product"}) %> <%= l.link_to_remove "remove", :style => 'margin-left:2px' %>
+      <% end %> 
+      <%= f.link_to_add "add line item", :line_items %> 
+    </div>
+  </div>
+  <div class='row'><%= f.label :order_value %><%= f.text_field :order_value, :readonly => true %></div>
+ 
+  
+  
   <div class='row'>
     <%= f.label :status %>
 	<div class='radio'>

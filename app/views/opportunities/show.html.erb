@@ -1,28 +1,22 @@
-<p class="notice"><%= notice %></p>
-
-<p>
-  <b>Account:</b>
-  <%= @opportunity.account_id %>
-</p>
 
 <p>
   <b>User:</b>
-  <%= @opportunity.user_id %>
+  <%= @opportunity.user.nickname %>
 </p>
 
 <p>
   <b>Status:</b>
-  <%= @opportunity.status_id %>
+  <%= @opportunity.status %>
 </p>
 
 <p>
   <b>Customer:</b>
-  <%= @opportunity.customer_id %>
+  <%= @opportunity.customer.name %>
 </p>
 
 <p>
   <b>Confidence:</b>
-  <%= @opportunity.confidence_id %>
+  <%= @opportunity.confidence.name %>
 </p>
 
 <p>
@@ -39,6 +33,12 @@
   <b>Order date:</b>
   <%= @opportunity.order_date %>
 </p>
+
+<ol>
+  <% @opportunity.line_items.each do |line_item| %>
+    <li><%= line_item.product.name %><%= line_item.value %></li>
+  <% end %>
+</ol>
 
 
 <%= link_to 'Edit', edit_opportunity_path(@opportunity) %> |

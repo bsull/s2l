@@ -32,3 +32,7 @@ $(document).ready( function() {
    $('input.initial-focus:first').focus(); // choose first just in case
 });
 
+// using the jquery.calculation plugin
+$("input[class*='add_me_up']").live("keyup", function(){
+  $("input[class*='add_me_up']").sum("keyup", "#opportunity_order_value");
+});

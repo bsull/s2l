@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  opportunity_id: 1
+  product_id: 1
+  value: 1
+
+two:
+  opportunity_id: 1
+  product_id: 1
+  value: 1

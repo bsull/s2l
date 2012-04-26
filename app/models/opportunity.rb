@@ -11,10 +11,14 @@ class Opportunity < ActiveRecord::Base
   belongs_to :customer
   belongs_to :confidence
   has_many :opportunity_records
+  has_many :line_items, :dependent => :destroy
+  has_many :products, :through => :line_items
   
   before_save :set_update_requirement_and_make_fresh
   after_save :make_history
   
+  accepts_nested_attributes_for :line_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
+
   STATUSES = %w[won lost dead forecast lead]
   
   ActiveRecord::Base.include_root_in_json = false

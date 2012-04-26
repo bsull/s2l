@@ -24,5 +24,6 @@ end
 # TODO Build opportunity detail with history
 # TODO Build Journal
 # TODO Work out stale strategy, cron job?
-
+# TODO Work out 'enabled' strategy
+# TODO Work out destroy strategy
 

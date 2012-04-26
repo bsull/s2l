@@ -4,6 +4,12 @@ GIT
   specs:
     cancan (1.4.0)
 
+GIT
+  remote: https://github.com/ryanb/nested_form.git
+  revision: 486e0f0e93f3ca455d5d0fc7869053257b6afce2
+  specs:
+    nested_form (0.2.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -91,5 +97,6 @@ DEPENDENCIES
   devise
   hirb
   meta_search
+  nested_form!
   rails (= 3.0.3)
   sqlite3-ruby

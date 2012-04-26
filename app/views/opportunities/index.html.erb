@@ -16,7 +16,7 @@
 		
 		<tr>
 			<td><%= opportunity.customer.name %></td>
-			<td><%= opportunity.name %></td>
+			<td><%= link_to opportunity.name, opportunity %></td>
 			<td><%= opportunity.status %></td>
 			<td><%= number_to_currency(opportunity.order_value) %></td>
 			<td><%= opportunity.updated_at.to_date %></td>

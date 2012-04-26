@@ -6,5 +6,7 @@ gem 'devise'
 gem 'cancan', :git => 'git://github.com/ryanb/cancan.git'
 gem "meta_search"
 gem 'hirb'
+gem 'nested_form', :git => 'https://github.com/ryanb/nested_form.git'
+
 
 

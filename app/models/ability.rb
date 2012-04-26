@@ -14,6 +14,7 @@ class Ability
       can :manage, Customer
       can :manage, Confidence
       can :manage, Opportunity
+      can :manage, Product
       can :manage, Target
     elsif user.role == 'salesman'
       can :show, Account

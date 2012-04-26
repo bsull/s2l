@@ -1,0 +1,28 @@
+<table> 
+	<caption>Products</caption>
+	<thead>
+		<tr>
+			<th>Name</th>			
+			<th>Description</th>
+			<% if can? :update, Product %> 
+			  <th> </th>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody> 
+		<% @products.each do |product| %>
+		  <tr>
+			<td><%= link_to product.name, product %></td>
+			<td><%= product.description %></td>
+			<% if can? :update, Product %> 
+			  <td><%= link_to "edit", edit_product_path(product) %> - <%= link_to 'delete', product, :confirm => 'Are you sure?', :method => :delete %></td>
+			<% end %>
+		  </tr>
+		<% end %>
+	</tbody>
+</table>
+
+<% if can? :create, Product %> 
+<%= link_to "Create New Product", new_product_path %>
+<% end %>
+
