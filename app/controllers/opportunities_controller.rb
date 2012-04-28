@@ -6,8 +6,9 @@ class OpportunitiesController < ApplicationController
   authorize_resource
   
   def index
-    @opportunities = Opportunity.order(sort_column + " " + sort_direction)
-    # render :json => @opportunities
+    params[:search] = {:meta_sort => 'updated_at.desc'}.merge(params[:search] || {})
+    @search = @current_account.opportunities.includes(:customer, :user).search(params[:search])
+    @opportunities = @search.all  
   end
 
   def show
@@ -53,6 +54,7 @@ class OpportunitiesController < ApplicationController
     @opportunity.destroy
     redirect_to opportunities_url
   end
+    
   private
   
   def setup
@@ -67,4 +69,5 @@ class OpportunitiesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
+
 end

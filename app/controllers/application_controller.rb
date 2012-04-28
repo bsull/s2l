@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
 end
 
 # TODO Clean out old x_targets stuff
-# TODO Add products and line items for opportunities
 # TODO Add catagories for opportunities
 # TODO Add filters and sorts to all tables
 # TODO Build opportunity detail with history

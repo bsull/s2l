@@ -5,21 +5,21 @@
   <% end %>
   
   <div class='row'><%= f.label :name, 'Opportunity' %><%= f.text_field :name %></div>
-  <div class='row'><%= f.label :order_date %><%= f.text_field :order_date %></div>
   
   <div class='row'>
-    <%= f.label :line_items, "Line Items" %>
+    <%= f.label :line_items, "Line items ($)" %>
     <div class='line_items'>
       <%= f.fields_for :line_items do |l| %>
-         <%= l.text_field :value, :class => 'add_me_up' %> <%= l.collection_select(:product_id, @products, :id, :name, {:include_blank => "Select Product"}) %> <%= l.link_to_remove "remove", :style => 'margin-left:2px' %>
+         <%= l.text_field :value, :class => 'add_me_up', :style=>"margin-right:1em" %><%= l.collection_select(:product_id, @products, :id, :name, {:include_blank => "Select Product"}) %> <%= l.link_to_remove "remove", :style => 'margin-left:2px' %>
       <% end %> 
       <%= f.link_to_add "add line item", :line_items %> 
     </div>
   </div>
-  <div class='row'><%= f.label :order_value %><%= f.text_field :order_value, :readonly => true %></div>
- 
+
+  <div class='row'><%= f.label :order_value, "Order total ($)" %><%= f.text_field :order_value, :readonly => "readonly", :style=>"font-weight:bold" %></div>
   
-  
+  <div class='row'><%= f.label :order_date %><%= f.text_field :order_date %></div>
+
   <div class='row'>
     <%= f.label :status %>
 	<div class='radio'>

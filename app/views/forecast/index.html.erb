@@ -16,6 +16,9 @@
 			<th><%= sort_link @search, :order_date, "Order Date" %></th>
 			<th><%= sort_link @search, :confidence_name, "Confidence", {}, :class => 'confidence' %></th>
 			<th><%= sort_link @search, :user_nickname, "Owner", {}, :class => 'user' %></th>
+			<% if can? :update, Opportunity %> 
+              <th> </th>
+			<% end %>
 		</tr>
 	</thead>
 	<tfoot></tfoot>
@@ -23,12 +26,15 @@
 		<% @opportunities.each do |opportunity| %>
 		
 		<tr>
-			<td><%= opportunity.customer.name %></td>
-			<td><%= opportunity.name %></td>
+			<td><%= link_to truncate(opportunity.customer.name, :length => 15, :separator => ' '), opportunity.customer %></td>
+			<td><%= link_to truncate(opportunity.name, :length => 30, :separator => ' '), opportunity %></td>
 			<td style="text-align:right"><%= number_to_currency(opportunity.order_value, :precision => 0) %></td>
-			<td><%= opportunity.order_date.to_date %></td>
+			<td style="text-align:center"><%= opportunity.updated_at.to_date %></td>
 			<td><%= opportunity.confidence.name %></td>
 			<td><%= opportunity.user.nickname %></td>
+			<% if can? :update, Opportunity %> 
+			  <td><%= link_to "edit", edit_opportunity_path(opportunity) %> - <%= link_to 'delete', opportunity, :confirm => 'Are you sure?', :method => :delete %></td>
+			<% end %>
 		</tr>
 		<% end %>
 	</tbody>

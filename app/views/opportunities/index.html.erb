@@ -2,12 +2,15 @@
 	<caption>Opportunities</caption>
 	<thead>
 		<tr>
-			<th><%= sortable "opportunity.customer.name", "Customer" %></th>
-			<th><%= sortable "name", "Opportunity" %></th>
-			<th>Status</th>
-			<th>Order Value</th>
-			<th>Last Update</th>
-			<th>Owner</th>
+			<th><%= sort_link @search, :customer_name, "Customer", {}, :class => "customer" %></th>
+			<th><%= sort_link @search, :name, "Opportunity" %></th>
+			<th><%= sort_link @search, :status %></th>
+			<th><%= sort_link @search, :order_value %></th>
+			<th><%= sort_link @search, :updated_at, "Latest Update" %></th>
+			<th><%= sort_link @search, :user_name, "Owner" %></th>
+			<% if can? :update, Opportunity %> 
+              <th> </th>
+			<% end %>
 		</tr>
 	</thead>
 	<tfoot></tfoot>
@@ -15,12 +18,15 @@
 		<% @opportunities.each do |opportunity| %>
 		
 		<tr>
-			<td><%= opportunity.customer.name %></td>
-			<td><%= link_to opportunity.name, opportunity %></td>
-			<td><%= opportunity.status %></td>
-			<td><%= number_to_currency(opportunity.order_value) %></td>
-			<td><%= opportunity.updated_at.to_date %></td>
+			<td><%= link_to truncate(opportunity.customer.name, :length => 15, :separator => ' '), opportunity.customer %></td>
+			<td><%= link_to truncate(opportunity.name, :length => 30, :separator => ' '), opportunity %></td>
+			<td><%= opportunity.status.humanize %></td>
+			<td style="text-align:right"><%= number_to_currency(opportunity.order_value, :precision => 0) %></td>
+			<td style="text-align:center"><%= opportunity.updated_at.to_date %></td>
 			<td><%= opportunity.user.nickname %></td>
+			<% if can? :update, Opportunity %> 
+			  <td><%= link_to "edit", edit_opportunity_path(opportunity) %> - <%= link_to 'delete', opportunity, :confirm => 'Are you sure?', :method => :delete %></td>
+			<% end %>
 		</tr>
 		<% end %>
 	</tbody>

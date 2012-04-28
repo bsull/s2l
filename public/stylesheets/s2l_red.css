@@ -312,12 +312,18 @@ li {
 }
 a {
 /*	font-weight:bold;*/
-	color:	#0C0CC0;
+/*	color:	#c20c0c;*/
+	color:	#12C;
+/*	color:	#2B6695;*/
+/*	color:	#093D72;*/
+/*	color:	#004276;*/
+/*	color:	#174F82;*/
+/*	color:	#0C0CC0;*/
 /*	color:	#3a6eca;*/
 	text-decoration:none;
 }
-a:visited {color:#0C0CC0;}
-a:hover {color:#0C0CC0;text-decoration:underline;}
+a:visited {color:#12C;}
+a:hover {color:#12C;text-decoration:underline;}
 
 
 /*	
@@ -358,7 +364,9 @@ td {
 	border-bottom:1px dotted #333;
 }
 tbody tr:hover {
-	background:#FFF5D6;
+
+	background:#ffc;
+/*	background:#FFF5D6;*/
 /*	background:#f1fff7;*/
 /*	background:#C2C2C2;*/
 /*	background:#CFCEC4;*/
