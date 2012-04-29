@@ -26,6 +26,7 @@ class AccountsController < ApplicationController
     if @account.save
       Confidence.defaults(@account)
       Target.defaults(@account, 2500000)
+      Product.defaults(@account)
       redirect_to request.protocol+@account.subdomain+"."+request.domain+request.port_string+sign_up_path
     else
       render :action => "new"

@@ -3,6 +3,15 @@
   <%= f.text_field :customer_name_like %><br />
   <%= f.label :name, "Opportunity" %>
   <%= f.text_field :name_like %><br />
+  <div class='row'>
+	<%= f.label :confidence %>
+	<div class='check'>
+      <% f.collection_checks :confidence_id_in, @current_account.confidences.all, :id, :name, :class => 'check' do |check| %>
+          <%= check.box %>
+          <%= check.label %><br />
+      <% end %>
+    </div>
+  </div>
   <%= f.submit %>
 <% end %>
 
