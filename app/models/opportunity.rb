@@ -18,7 +18,9 @@ class Opportunity < ActiveRecord::Base
   after_save :make_history
   
   accepts_nested_attributes_for :line_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
-
+  
+  monetize :order_value, :as => "m_order_value", :with_currency => :usd
+  
   STATUSES = %w[won lost dead forecast lead]
   
   ActiveRecord::Base.include_root_in_json = false
