@@ -12,10 +12,10 @@ class Target < ActiveRecord::Base
   monetize :q3_cents
   monetize :q4_cents
   
-  def self.defaults(target_owner, quarterly_amount) # quarterly_amount should be given in Dollars
+  def self.defaults(target_owner, quarterly_amount) # quarterly_amount should be given in whole dollars
     (1.year.ago.year..1.year.from_now.year).each do |y|
       target_owner.targets.create!(:fiscal_year => y) do |t|
-        t.q1 = t.q2 = t.q3 = t.q4 = quarterly_amount*100
+        t.q1 = t.q2 = t.q3 = t.q4 = quarterly_amount
       end
     end   
   end
