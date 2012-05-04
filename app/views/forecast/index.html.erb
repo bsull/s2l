@@ -37,7 +37,7 @@
 		<tr>
 			<td><%= link_to truncate(opportunity.customer.name, :length => 15, :separator => ' '), opportunity.customer %></td>
 			<td><%= link_to truncate(opportunity.name, :length => 30, :separator => ' '), opportunity %></td>
-			<td style="text-align:right"><%= number_to_currency(opportunity.m_order_value, :precision => 2) %></td>
+			<td style="text-align:right"><%= opportunity.order_value.format %></td>
 			<td style="text-align:center"><%= opportunity.updated_at.to_date %></td>
 			<td><%= opportunity.confidence.name %></td>
 			<td><%= opportunity.user.nickname %></td>

@@ -10,13 +10,13 @@
     <%= f.label :line_items, "Line items ($)" %>
     <div class='line_items'>
       <%= f.fields_for :line_items do |l| %>
-         <%= l.text_field :m_value, :value => number_to_currency(l.object.m_value), :class => 'add_me_up', :style=>"margin-right:1em" %><%= l.collection_select(:product_id, @products, :id, :name, {:include_blank => "Select Product"}) %> <%= l.link_to_remove "remove", :style => 'margin-left:2px' %>
+         <%= l.text_field :value, :value => l.object.value.format, :class => 'add_me_up format_currency', :style=>"margin-right:1em" %><%= l.collection_select(:product_id, @products, :id, :name, {:include_blank => "Select Product"}) %> <%= l.link_to_remove "remove", :style => 'margin-left:2px' %>
       <% end %> 
       <%= f.link_to_add "add line item", :line_items %> 
     </div>
   </div>
 
-  <div class='row'><%= f.label :m_order_value, "Order total ($)" %><%= f.text_field :m_order_value, :value => number_to_currency(f.object.m_order_value), :readonly => "readonly" %></div>
+  <div class='row'><%= f.label :order_value %><%= f.text_field :order_value, :value => f.object.order_value.format, :class => 'format_currency', :readonly => "readonly" %></div>
   
   <div class='row'><%= f.label :order_date %><%= f.text_field :order_date %></div>
 

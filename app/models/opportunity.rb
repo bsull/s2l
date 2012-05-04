@@ -19,18 +19,18 @@ class Opportunity < ActiveRecord::Base
   
   accepts_nested_attributes_for :line_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
   
-  monetize :order_value, :as => "m_order_value", :with_currency => :usd
+  monetize :order_value_cents
   
   STATUSES = %w[won lost dead forecast lead]
   
   ActiveRecord::Base.include_root_in_json = false
   
   def self.bft_chart(owner, last_year_begin, next_year_end)
-    opportunities = owner.opportunities.select('order_date, order_value').where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end)
+    opportunities = owner.opportunities.select('order_date, order_value_cents').where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end)
  
     # This section will prepare the bookings data series  
     bookings = opportunities.where('status =?', 'won').group_by{|o| o.order_date.beginning_of_month}
-    monthly_bookings = {} and bookings.each{|k, v| monthly_bookings[k] = v.sum(&:order_value).to_i}
+    monthly_bookings = {} and bookings.each{|k, v| monthly_bookings[k] = v.sum(&:order_value_cents)}
   
     empty_bookings = {}
     d = last_year_begin
@@ -49,12 +49,13 @@ class Opportunity < ActiveRecord::Base
 
     x = sorted_bookings.collect{|d| d[0].to_time.to_i * 1000}
     y = last_year + this_year
+    y.collect!{|b| b/100 }
     series = []<<x<<y
-    bookings_series = series.transpose # these are your bookings for the chart
+    bookings_series = series.transpose #these are your bookings for the chart
   
     # This section will prepare the forecast data series
     forecast = opportunities.where('status =?', 'forecast').group_by{|o| o.order_date.beginning_of_month}
-    monthly_forecast = {} and forecast.each{|k, v| monthly_forecast[k] = v.sum(&:order_value).to_i}
+    monthly_forecast = {} and forecast.each{|k, v| monthly_forecast[k] = v.sum(&:order_value_cents)}
 
     empty_forecast = {}
     d = last_year_begin
@@ -65,7 +66,7 @@ class Opportunity < ActiveRecord::Base
   
     monthly_forecast.merge!(empty_forecast){|k, v1, v2| v1}
     sorted_forecast = monthly_forecast.sort
-    forecast_values = sorted_forecast.collect{|f| f[1]}
+    forecast_values = sorted_forecast.collect{|f| f[1]/100}
         
     first_period = forecast_values.first((Date.today.month - last_year_begin.month) + 12*(Date.today.year - last_year_begin.year)) # Nifty date difference in number of months
     old_forecast = [] and first_period.each_with_index{|t, i| old_forecast << (t + bookings_series[i][1])}

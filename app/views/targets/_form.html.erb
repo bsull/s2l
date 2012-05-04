@@ -4,10 +4,10 @@
     <%= f.text_field :fiscal_year %>
     <br><span class="hint">Enter a year, like 2020.</span>
   </div>
-  <div class='row'><%= f.label :q1 %><%= f.text_field :q1 %></div>
-  <div class='row'><%= f.label :q2 %><%= f.text_field :q2 %></div>
-  <div class='row'><%= f.label :q3 %><%= f.text_field :q3 %></div>
-  <div class='row'><%= f.label :q4 %><%= f.text_field :q4 %></div>
+  <div class='row'><%= f.label :q1 %><%= f.text_field :q1, :value => f.object.q1.format, :class => 'format_currency' %></div>
+  <div class='row'><%= f.label :q2 %><%= f.text_field :q2, :value => f.object.q2.format, :class => 'format_currency' %></div>
+  <div class='row'><%= f.label :q3 %><%= f.text_field :q3, :value => f.object.q3.format, :class => 'format_currency' %></div>
+  <div class='row'><%= f.label :q4 %><%= f.text_field :q4, :value => f.object.q4.format, :class => 'format_currency' %></div>
   <div class='row'><%= f.submit %></div>
 <% end %>	
   
