@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504203645) do
+ActiveRecord::Schema.define(:version => 20120504205342) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20120504203645) do
   create_table "line_items", :force => true do |t|
     t.integer  "opportunity_id"
     t.integer  "product_id"
-    t.integer  "value_cents",    :default => 0
+    t.integer  "value_cents",    :limit => 8, :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,13 +60,13 @@ ActiveRecord::Schema.define(:version => 20120504203645) do
     t.string   "status"
     t.boolean  "stale"
     t.date     "update_requirement"
-    t.bigint  "order_value_cents",  :default => 0
+    t.integer  "order_value_cents",  :limit => 8, :default => 0
   end
 
   create_table "opportunity_records", :force => true do |t|
     t.integer  "opportunity_id"
     t.string   "salesman"
-    t.bigint  "order_value_cents", :default => 0
+    t.integer  "order_value_cents", :limit => 8, :default => 0
     t.date     "order_date"
     t.integer  "days_to_order"
     t.string   "status"
@@ -86,10 +86,10 @@ ActiveRecord::Schema.define(:version => 20120504203645) do
 
   create_table "targets", :force => true do |t|
     t.integer  "fiscal_year"
-    t.bigint  "q1_cents",        :default => 0
-    t.bigint  "q2_cents",        :default => 0
-    t.bigint  "q3_cents",        :default => 0
-    t.bigint  "q4_cents",        :default => 0
+    t.integer  "q1_cents",        :limit => 8, :default => 0
+    t.integer  "q2_cents",        :limit => 8, :default => 0
+    t.integer  "q3_cents",        :limit => 8, :default => 0
+    t.integer  "q4_cents",        :limit => 8, :default => 0
     t.string   "targetable_type"
     t.integer  "targetable_id"
     t.datetime "created_at"
