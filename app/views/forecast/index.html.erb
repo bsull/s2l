@@ -1,20 +1,3 @@
-<%= form_for @search, :url => forecast_path, :html => {:method => :get} do |f| %>
-  <%= f.label :customer_name, "Customer" %>
-  <%= f.text_field :customer_name_like %><br />
-  <%= f.label :name, "Opportunity" %>
-  <%= f.text_field :name_like %><br />
-  <div class='row'>
-	<%= f.label :confidence %>
-	<div class='check'>
-      <% f.collection_checks :confidence_id_in, @current_account.confidences.all, :id, :name, :class => 'check' do |check| %>
-          <%= check.box %>
-          <%= check.label %><br />
-      <% end %>
-    </div>
-  </div>
-  <%= f.submit %>
-<% end %>
-
 <table>
 	<caption>Forecast</caption>
 	<thead>
@@ -48,3 +31,32 @@
 		<% end %>
 	</tbody>
 </table>
+
+<%= form_for @search, :url => forecast_path, :html => {:method => :get} do |f| %>
+
+  <div class='row'><%= f.label :customer_name, "Customer" %><%= f.text_field :customer_name_like %></div>
+  <div class='row'><%= f.label :name, "Opportunity" %><%= f.text_field :name_like %></div>
+  
+  <div class='row'>
+	<%= f.label :confidence %>
+	<div class='check'>
+      <% f.collection_checks :confidence_id_in, @confidences, :id, :name, :class => 'check' do |check| %>
+          <%= check.box %>
+          <%= check.label %><br />
+      <% end %>
+    </div>
+  </div>
+
+  <div class='row'>
+	<%= f.label :usesr, "Salesman" %>
+	<div class='check'>
+      <% f.collection_checks :user_id_in, @salesmen, :id, :nickname, :class => 'check' do |check| %>
+          <%= check.box %>
+          <%= check.label %><br />
+      <% end %>
+    </div>
+  </div>
+
+  <%= f.submit %>
+
+<% end %>
