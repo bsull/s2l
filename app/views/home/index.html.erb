@@ -2,7 +2,7 @@
 <div id="chart" style="width:600px;height:300px;margin-right:auto;margin-left:auto;"></div> 
 <script id="source" language="javascript" type="text/javascript"> 
   $(function () {
-	var d = <%= bft_chart(@current_account).to_json %>;
+	var d = <%= @current_account.bft_chart(@bookings, @forecast, @current_account).to_json %>;
 	var data = [	  
 	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .3 }, color: "#333" },
 	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#C20C0C" },

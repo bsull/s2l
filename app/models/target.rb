@@ -21,8 +21,8 @@ class Target < ActiveRecord::Base
   end
   
   # TODO check to see if this breaks when you're missing a target in the middle of a date range
-  def self.bft_chart(owner, fiscal_year_end)  
-    targets = owner.targets.order('fiscal_year ASC')
+  def self.bft_chart(t, fiscal_year_end)  
+    targets = t.targets.order('fiscal_year ASC')
     values = targets.collect{|t| [t.q1.cents, t.q1.cents+t.q2.cents, t.q1.cents+t.q2.cents+t.q3.cents, t.q1.cents+t.q2.cents+t.q3.cents+t.q4.cents]}.flatten!
     values.collect!{|t| t/100 }
     years = targets.collect{|t| Date.new(t.fiscal_year, fiscal_year_end)-11.months}

@@ -17,12 +17,41 @@ $(function() {
 });
 
 $(function() {
+    $(".pick_a_date").datepicker({
+        numberOfMonths:3,
+        stepMonths:3,
+        dateFormat: 'yy-mm-dd'
+    });
+});
+
+$(function() {
     $("#account_target_fiscal_year_end").datepicker({
         numberOfMonths:3,
         stepMonths:3,
         dateFormat: 'yy-mm-dd'
     });
 });
+
+
+$(function() {
+	var dates = $( "#from, #to" ).datepicker({
+		defaultDate: "+1w",
+		changeMonth: true,
+		numberOfMonths: 3,
+		stepMonths:3,
+        dateFormat: 'yy-mm-dd',
+		onSelect: function( selectedDate ) {
+			var option = this.id == "from" ? "minDate" : "maxDate",
+				instance = $( this ).data( "datepicker" ),
+				date = $.datepicker.parseDate(
+					instance.settings.dateFormat ||
+					$.datepicker._defaults.dateFormat,
+					selectedDate, instance.settings );
+			dates.not( this ).datepicker( "option", option, date );
+		}
+	});
+});
+
 
 jQuery(function(){
 	jQuery('ul.sf-menu').superfish();

@@ -25,11 +25,10 @@ class Opportunity < ActiveRecord::Base
   
   ActiveRecord::Base.include_root_in_json = false
   
-  def self.bft_chart(owner, last_year_begin, next_year_end)
-    opportunities = owner.opportunities.select('order_date, order_value_cents').where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end)
+  def self.bft_chart(b, f, last_year_begin, next_year_end)
  
     # This section will prepare the bookings data series  
-    bookings = opportunities.where('status =?', 'won').group_by{|o| o.order_date.beginning_of_month}
+    bookings = b.where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end).group_by{|o| o.order_date.beginning_of_month}
     monthly_bookings = {} and bookings.each{|k, v| monthly_bookings[k] = v.sum(&:order_value_cents)}
   
     empty_bookings = {}
@@ -54,7 +53,7 @@ class Opportunity < ActiveRecord::Base
     bookings_series = series.transpose #these are your bookings for the chart
   
     # This section will prepare the forecast data series
-    forecast = opportunities.where('status =?', 'forecast').group_by{|o| o.order_date.beginning_of_month}
+    forecast = f.where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end).group_by{|o| o.order_date.beginning_of_month}
     monthly_forecast = {} and forecast.each{|k, v| monthly_forecast[k] = v.sum(&:order_value_cents)}
 
     empty_forecast = {}

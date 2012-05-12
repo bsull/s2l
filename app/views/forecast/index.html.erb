@@ -1,3 +1,31 @@
+<div class="g640 inside">
+<div id="chart" style="width:600px;height:300px;margin-right:auto;margin-left:auto;"></div> 
+<script id="source" language="javascript" type="text/javascript"> 
+  $(function () {
+	var d = <%= @current_account.bft_chart(@bookings, @forecast, @current_account).to_json %>;
+	var data = [	  
+	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .3 }, color: "#333" },
+	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#C20C0C" },
+	  { label: "Bookings", data: d[1], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#333" }
+	];
+    $.plot($("#chart"), data, {
+	  xaxis: { mode: "time", min: d[3], max: d[4], ticks: 5 },
+	  legend: { show: false }
+    });
+  });
+</script>
+</div>
+<div class="g320" style="margin-top:1em;">
+	<h1>
+		<span style="color:#333">Bookings</span><br>
+		<span style="color:#c20c0c">Forecast</span><br>
+		<span style="color:#B2B2B2">Targets</span>
+	</h1>	
+
+	<%= link_to 'Set Targets', polymorphic_path([@current_account, :targets]) %>
+</div>
+<div class="clear">&nbsp;</div>
+
 <table>
 	<caption>Forecast</caption>
 	<thead>
@@ -15,13 +43,13 @@
 	</thead>
 	<tfoot></tfoot>
 	<tbody>
-		<% @opportunities.each do |opportunity| %>
+		<% @table_opportunities.each do |opportunity| %>
 		
 		<tr>
 			<td><%= link_to truncate(opportunity.customer.name, :length => 15, :separator => ' '), opportunity.customer %></td>
 			<td><%= link_to truncate(opportunity.name, :length => 30, :separator => ' '), opportunity %></td>
 			<td style="text-align:right"><%= opportunity.order_value.format %></td>
-			<td style="text-align:center"><%= opportunity.updated_at.to_date %></td>
+			<td style="text-align:center"><%= opportunity.order_date.to_date %></td>
 			<td><%= opportunity.confidence.name %></td>
 			<td><%= opportunity.user.nickname %></td>
 			<% if can? :update, Opportunity %> 
@@ -32,11 +60,14 @@
 	</tbody>
 </table>
 
+<h2 class='form_heading'>Filter</h2>
+
 <%= form_for @search, :url => forecast_path, :html => {:method => :get} do |f| %>
 
   <div class='row'><%= f.label :customer_name, "Customer" %><%= f.text_field :customer_name_like %></div>
   <div class='row'><%= f.label :name, "Opportunity" %><%= f.text_field :name_like %></div>
   
+  <div class='row'><%= f.label :order_date, "Date Range" %><%= f.text_field :order_date_gte, :id => 'from' %><%= f.text_field :order_date_lte, :id => 'to' %></div>
   <div class='row'>
 	<%= f.label :confidence %>
 	<div class='check'>
