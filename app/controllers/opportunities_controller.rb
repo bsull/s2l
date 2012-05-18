@@ -6,9 +6,7 @@ class OpportunitiesController < ApplicationController
   authorize_resource
   
   def index
-    params[:search] = {:meta_sort => 'updated_at.desc'}.merge(params[:search] || {})
-    @search = @current_account.opportunities.includes(:customer, :user).search(params[:search])
-    @opportunities = @search.all  
+    @opportunities = @current_account.opportunities.includes(:customer, :user).search(params).order(sort_column + " " + sort_direction).page(params[:page]).per(1) #.search(params[:search])
   end
 
   def show
@@ -63,7 +61,7 @@ class OpportunitiesController < ApplicationController
   end
   
   def sort_column
-    %w[name customer.name].include?(params[:sort]) ? params[:sort] : "name"
+    %w[ customers.name name status order_value_cents updated_at users.nickname ].include?(params[:sort]) ? params[:sort] : "name"
   end
   
   def sort_direction

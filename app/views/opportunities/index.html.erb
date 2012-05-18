@@ -2,12 +2,12 @@
 	<caption>Opportunities</caption>
 	<thead>
 		<tr>
-			<th><%= sort_link @search, :customer_name, "Customer", {}, :class => "customer" %></th>
-			<th><%= sort_link @search, :name, "Opportunity" %></th>
-			<th><%= sort_link @search, :status %></th>
-			<th><%= sort_link @search, :order_value %></th>
-			<th><%= sort_link @search, :updated_at, "Latest Update" %></th>
-			<th><%= sort_link @search, :user_name, "Owner" %></th>
+			<th><%= sortable "customers.name", "Customer" %></th>
+			<th><%= sortable "name", "Opportunity" %></th>
+			<th><%= sortable "status", "Status" %></th>
+			<th><%= sortable "order_value_cents", "Order Value" %></th>
+			<th><%= sortable "updated_at", "Last Update" %></th>
+			<th><%= sortable "users.nickname", "Owner" %></th>
 			<% if can? :update, Opportunity %> 
               <th> </th>
 			<% end %>
@@ -31,3 +31,15 @@
 		<% end %>
 	</tbody>
 </table>
+<%= paginate @opportunities %>
+
+<%= form_tag opportunities_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :name, params[:name] %>
+    <%= text_field_tag :min_order_value, params[:min_order_value] %>   
+    <%= text_field_tag :max_order_value, params[:max_order_value] %>   
+    <%= submit_tag "Search", :name => nil %>
+
+
+  </p>
+<% end %>

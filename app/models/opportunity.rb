@@ -25,6 +25,14 @@ class Opportunity < ActiveRecord::Base
   
   ActiveRecord::Base.include_root_in_json = false
   
+  def self.search(params)
+      search = scoped
+      search = search.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
+      search = search.where('order_value_cents >= ?', params[:min_order_value].to_money.cents) if params[:min_order_value].present?
+      search = search.where('order_value_cents <= ?', params[:max_order_value].to_money.cents) if params[:max_order_value].present?
+      search
+  end
+  
   def self.bft_chart(b, f, last_year_begin, next_year_end)
  
     # This section will prepare the bookings data series  
