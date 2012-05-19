@@ -6,7 +6,8 @@ class OpportunitiesController < ApplicationController
   authorize_resource
   
   def index
-    @opportunities = @current_account.opportunities.includes(:customer, :user).search(params).order(sort_column + " " + sort_direction).page(params[:page]).per(1) #.search(params[:search])
+    @opportunities = @current_account.opportunities.includes(:customer, :user).search(params).order(sort_column + " " + sort_direction).page(params[:page]).per(1)
+    @salesmen = @current_account.users.where(:role => ['administrator', 'salesman'])
   end
 
   def show

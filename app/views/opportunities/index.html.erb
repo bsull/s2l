@@ -3,10 +3,10 @@
 	<thead>
 		<tr>
 			<th><%= sortable "customers.name", "Customer" %></th>
-			<th><%= sortable "name", "Opportunity" %></th>
-			<th><%= sortable "status", "Status" %></th>
-			<th><%= sortable "order_value_cents", "Order Value" %></th>
-			<th><%= sortable "updated_at", "Last Update" %></th>
+			<th><%= sortable "opportunities.name", "Opportunity" %></th>
+			<th><%= sortable "opportunities.status", "Status" %></th>
+			<th><%= sortable "opportunities.order_value_cents", "Order Value" %></th>
+			<th><%= sortable "opportunities.updated_at", "Last Update" %></th>
 			<th><%= sortable "users.nickname", "Owner" %></th>
 			<% if can? :update, Opportunity %> 
               <th> </th>
@@ -34,12 +34,28 @@
 <%= paginate @opportunities %>
 
 <%= form_tag opportunities_path, :method => 'get' do %>
-  <p>
-    <%= text_field_tag :name, params[:name] %>
-    <%= text_field_tag :min_order_value, params[:min_order_value] %>   
-    <%= text_field_tag :max_order_value, params[:max_order_value] %>   
-    <%= submit_tag "Search", :name => nil %>
+  <div class='row'><%= label_tag "Customer" %><%= text_field_tag :customer, params[:customer] %></div>
+  <div class='row'><%= label_tag "Opportunity" %><%= text_field_tag :name, params[:name] %></div>
+  <div class='row'><%= label_tag "Order Value Range" %><%= text_field_tag :min_order_value, params[:min_order_value], :class => 'format_currency' %><%= text_field_tag :max_order_value, params[:max_order_value], :class => 'format_currency' %></div>
+  <div class='row'><%= label_tag "Order Date Range" %><%= text_field_tag :min_order_date, params[:min_order_date], :id => 'from' %><%= text_field_tag :max_order_date, params[:max_order_date], :id => 'to' %></div>
+  <div class='row'>
+	<%= label_tag 'Status' %>
+	<div class='check'>
+      <% Opportunity::STATUSES.each do |status| %>
+          <%= check_box_tag 'status[]', status, checked = params[:status] && params[:status].include?(status), :id => status %>
+          <%= label_tag status %><br />
+      <% end %>
+    </div>
+  </div>
+  <div class='row'>
+	<%= label_tag 'Owner' %>
+	<div class='check'>
+      <% @salesmen.each do |user| %>
+          <%= check_box_tag 'owner[]', user.id, checked = params[:owner] && params[:owner].include?(user.id.to_param), :id => user.nickname  %>
+          <%= label_tag user.nickname %><br />
+      <% end %>
+    </div>
+  </div>
 
-
-  </p>
+  <div class='row'><%= submit_tag "Search", :name => nil %></div>
 <% end %>

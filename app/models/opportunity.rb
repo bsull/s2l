@@ -27,9 +27,15 @@ class Opportunity < ActiveRecord::Base
   
   def self.search(params)
       search = scoped
-      search = search.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
-      search = search.where('order_value_cents >= ?', params[:min_order_value].to_money.cents) if params[:min_order_value].present?
-      search = search.where('order_value_cents <= ?', params[:max_order_value].to_money.cents) if params[:max_order_value].present?
+      search = search.joins(:customer).where('customers.name LIKE ?', "%#{params[:customer]}%") if params[:customer].present?
+      search = search.where('opportunities.name LIKE ?', "%#{params[:name]}%") if params[:name].present?
+      search = search.where('opportunities.order_value_cents >= ?', params[:min_order_value].to_money.cents) if params[:min_order_value].present?
+      search = search.where('opportunities.order_value_cents <= ?', params[:max_order_value].to_money.cents) if params[:max_order_value].present?
+      search = search.where('opportunities.order_date >= ?', params[:min_order_date]) if params[:min_order_date].present?
+      search = search.where('opportunities.order_date <= ?', params[:max_order_date]) if params[:max_order_date].present?
+      search = search.where(:status => params[:status]) if params[:status].present?
+      search = search.where(:confidence_id => params[:confidence]) if params[:confidence].present?
+      search = search.where(:user_id => params[:owner]) if params[:owner].present?   
       search
   end
   

@@ -2,7 +2,7 @@
 <div id="chart" style="width:600px;height:300px;margin-right:auto;margin-left:auto;"></div> 
 <script id="source" language="javascript" type="text/javascript"> 
   $(function () {
-	var d = <%= @current_account.bft_chart(@bookings, @forecast, @current_account).to_json %>;
+	var d = <%= @current_account.bft_chart(@bookings, @opportunities, @current_account).to_json %>;
 	var data = [	  
 	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .3 }, color: "#333" },
 	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#C20C0C" },
@@ -30,12 +30,12 @@
 	<caption>Forecast</caption>
 	<thead>
 		<tr>
-			<th><%= sort_link @search, :customer_name, "Customer", {}, :class => "customer" %></th>
-			<th><%= sort_link @search, :name, "Opportunity" %></th>
-			<th><%= sort_link @search, :order_value %></th>
-			<th><%= sort_link @search, :order_date, "Order Date" %></th>
-			<th><%= sort_link @search, :confidence_name, "Confidence", {}, :class => 'confidence' %></th>
-			<th><%= sort_link @search, :user_nickname, "Owner", {}, :class => 'user' %></th>
+			<th><%= sortable "customers.name", "Customer" %></th>
+			<th><%= sortable "opportunities.name", "Opportunity" %></th>
+			<th><%= sortable "opportunities.order_value_cents", "Order Value" %></th>
+			<th><%= sortable "opportunities.order_date", "Order Date" %></th>
+			<th><%= sortable "confidences.name", "Confidence" %></th>
+			<th><%= sortable "users.nickname", "Owner" %></th>
 			<% if can? :update, Opportunity %> 
               <th> </th>
 			<% end %>
@@ -43,7 +43,7 @@
 	</thead>
 	<tfoot></tfoot>
 	<tbody>
-		<% @table_opportunities.each do |opportunity| %>
+		<% @opportunities.each do |opportunity| %>
 		
 		<tr>
 			<td><%= link_to truncate(opportunity.customer.name, :length => 15, :separator => ' '), opportunity.customer %></td>
@@ -59,35 +59,33 @@
 		<% end %>
 	</tbody>
 </table>
+<%= paginate @opportunities %>
 
 <h2 class='form_heading'>Filter</h2>
 
-<%= form_for @search, :url => forecast_path, :html => {:method => :get} do |f| %>
-
-  <div class='row'><%= f.label :customer_name, "Customer" %><%= f.text_field :customer_name_like %></div>
-  <div class='row'><%= f.label :name, "Opportunity" %><%= f.text_field :name_like %></div>
-  
-  <div class='row'><%= f.label :order_date, "Date Range" %><%= f.text_field :order_date_gte, :id => 'from' %><%= f.text_field :order_date_lte, :id => 'to' %></div>
+<%= form_tag forecast_path, :method => 'get' do %>
+  <div class='row'><%= label_tag "Customer" %><%= text_field_tag :customer, params[:customer] %></div>
+  <div class='row'><%= label_tag "Opportunity" %><%= text_field_tag :name, params[:name] %></div>
+  <div class='row'><%= label_tag "Order Value Range" %><%= text_field_tag :min_order_value, params[:min_order_value], :class => 'format_currency' %><%= text_field_tag :max_order_value, params[:max_order_value], :class => 'format_currency' %></div>
+  <div class='row'><%= label_tag "Order Date Range" %><%= text_field_tag :min_order_date, params[:min_order_date], :id => 'from' %><%= text_field_tag :max_order_date, params[:max_order_date], :id => 'to' %></div>
   <div class='row'>
-	<%= f.label :confidence %>
+	<%= label_tag 'Confidence' %>
 	<div class='check'>
-      <% f.collection_checks :confidence_id_in, @confidences, :id, :name, :class => 'check' do |check| %>
-          <%= check.box %>
-          <%= check.label %><br />
+      <% @confidences.each do |confidence| %>
+          <%= check_box_tag 'confidence[]', confidence.id, checked = params[:confidence] && params[:confidence].include?(confidence.id), :id => confidence.name %>
+          <%= label_tag confidence.name %><br />
+      <% end %>
+    </div>
+  </div>
+  <div class='row'>
+	<%= label_tag 'Owner' %>
+	<div class='check'>
+      <% @salesmen.each do |user| %>
+          <%= check_box_tag 'owner[]', user.id, checked = params[:owner] && params[:owner].include?(user.id.to_param), :id => user.nickname  %>
+          <%= label_tag user.nickname %><br />
       <% end %>
     </div>
   </div>
 
-  <div class='row'>
-	<%= f.label :usesr, "Salesman" %>
-	<div class='check'>
-      <% f.collection_checks :user_id_in, @salesmen, :id, :nickname, :class => 'check' do |check| %>
-          <%= check.box %>
-          <%= check.label %><br />
-      <% end %>
-    </div>
-  </div>
-
-  <%= f.submit %>
-
+  <div class='row'><%= submit_tag "Search", :name => nil %></div>
 <% end %>
