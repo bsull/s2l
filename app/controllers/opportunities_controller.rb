@@ -6,7 +6,7 @@ class OpportunitiesController < ApplicationController
   authorize_resource
   
   def index
-    @opportunities = @current_account.opportunities.includes(:customer, :user).search(params).order(sort_column + " " + sort_direction).page(params[:page]).per(1)
+    @opportunities = @current_account.opportunities.includes(:customer, :user).search(params).order(sort_column + " " + sort_direction).page(params[:page])
     @salesmen = @current_account.users.where(:role => ['administrator', 'salesman'])
   end
 
@@ -18,7 +18,7 @@ class OpportunitiesController < ApplicationController
     @opportunity = Opportunity.new
     @opportunity.status = 'lead'
     @opportunity.confidence = @confidences.last
-    3.times { @opportunity.line_items.build }
+    2.times { @opportunity.line_items.build }
   end
 
   def edit

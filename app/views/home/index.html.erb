@@ -26,37 +26,54 @@
 </div>
 <div class="clear">&nbsp;</div>	
 
-<table>
-  <caption>Recent Wins</caption>
-	<% @recent_wins.each do |opportunity| %>
-	  <tr>
-	    <td><%= opportunity.customer.name%> - <%= opportunity.name %></td>
-	    <td><%= opportunity.order_value %></td>
-	    <td><%= opportunity.user.nickname %></td>
-	  </tr>
-	<% end %>
-</table>
-
-<table>
-  <caption>Recently Lost or Dead</caption>
-	<% @recent_lost_or_dead.each do |opportunity| %>
-	  <tr>
-	    <td><%= opportunity.customer.name%> - <%= opportunity.name %></td>
-	    <td><%= opportunity.order_value %></td>
-	  </tr>
-	<% end %>
-</table>
-
+	<table>
+		<thead>
+			<tr>
+				<th></th>
+				<th><%= "Customer" %></th>
+				<th><%= "Opportunity" %></th>
+				<th><%= "Order Value" %></th>
+				<th><%= "Owner" %></th>
+			</tr>
+		</thead>
+	  <caption>Recent Activity</caption>
+		<% @recent_wins.each do |opportunity| %>
+		  <tr>
+		    <td style="color:#333; font-weight:bold">WON</td>
+		    <td><%= opportunity.customer.name%></td>
+		    <td><%= opportunity.name %></td>
+		    <td style="text-align:right"><%= opportunity.order_value.format  %></td>
+		    <td><%= opportunity.user.nickname %></td>
+		  </tr>
+		<% end %>
+		<% @recent_losses.each do |opportunity| %>
+		  <tr>
+		    <td style="color:#333; font-weight:bold">lost</td>
+		    <td><%= opportunity.customer.name%></td>
+		    <td><%= opportunity.name %></td>
+		    <td style="text-align:right"><%= opportunity.order_value.format %></td>
+		    <td><%= opportunity.user.nickname %></td>
+		  </tr>
+		<% end %>
+		<% @recent_dead.each do |opportunity| %>
+		  <tr>
+		    <td style="color:#333; font-weight:bold">dead</td>
+		    <td><%= opportunity.customer.name%></td>
+		    <td><%= opportunity.name %></td>
+		    <td style="text-align:right"><%= opportunity.order_value.format %></td>
+		    <td><%= opportunity.user.nickname %></td>
+		  </tr>
+		<% end %>
+		<% @recent_forecast.each do |opportunity| %>
+		  <tr>
+		    <td style="color:#c20c0c; font-weight:bold">NEW</td>
+		    <td><%= opportunity.customer.name%></td>
+		    <td><%= opportunity.name %></td>
+		    <td style="text-align:right"><%= opportunity.order_value.format %></td>
+		    <td><%= opportunity.user.nickname %></td>
+		  </tr>
+		<% end %>
+	</table>
 
 </div> 
-<div class="g320" style="background:#eee; padding:1em; border:1px solid #ddd"><table>
-  <caption>New to the Forecast</caption>
-	<% @recent_forecast.each do |opportunity| %>
-	  <tr>
-	    <td><%= opportunity.customer.name%> - <%= opportunity.name %></td>
-	    <td><%= opportunity.order_value %></td>
-	    <td><%= opportunity.user.nickname %></td>
-	  </tr>
-	<% end %>
-</table></div>
 		

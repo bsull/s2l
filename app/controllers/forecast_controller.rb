@@ -3,7 +3,7 @@ class ForecastController < ApplicationController
     helper_method :sort_column, :sort_direction
   
   def index   
-    @opportunities = @current_account.opportunities.includes(:customer, :confidence, :user).where(:status => 'forecast').search(params).order(sort_column + " " + sort_direction).page(params[:page]).per(1)
+    @opportunities = @current_account.opportunities.includes(:customer, :confidence, :user).where(:status => 'forecast').search(params).order(sort_column + " " + sort_direction).page(params[:page])
     
     @bookings = @current_account.opportunities.where(:status => 'won')
     # @forecast = @current_account.opportunities.where(:status => 'forecast').search(params)
