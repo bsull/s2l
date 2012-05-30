@@ -41,7 +41,7 @@
   <div class='row'>
 	<%= label_tag 'Status' %>
 	<div class='check'>
-      <% Opportunity::STATUSES.each do |status| %>
+      <% (Opportunity::STATUSES - ["lead"]).each do |status| %>
           <%= check_box_tag 'status[]', status, checked = params[:status] && params[:status].include?(status), :id => status %>
           <%= label_tag status %><br />
       <% end %>

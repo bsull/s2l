@@ -14,7 +14,7 @@ class Opportunity < ActiveRecord::Base
   has_many :line_items, :dependent => :destroy
   has_many :products, :through => :line_items
   
-  before_save :set_update_requirement_and_make_fresh
+  before_save :set_expiration_date_and_make_fresh
   after_save :make_history
   
   accepts_nested_attributes_for :line_items, :reject_if => lambda { |a| a[:product_id].blank? }, :allow_destroy => true
@@ -24,6 +24,10 @@ class Opportunity < ActiveRecord::Base
   STATUSES = %w[won lost dead forecast lead]
   
   ActiveRecord::Base.include_root_in_json = false
+  
+  def weighted_order_value_cents
+    order_value_cents * confidence.weight / 100
+  end
   
   def self.search(params)
       search = scoped
@@ -44,7 +48,7 @@ class Opportunity < ActiveRecord::Base
     # This section will prepare the bookings data series  
     bookings = b.where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end).group_by{|o| o.order_date.beginning_of_month}
     monthly_bookings = {} and bookings.each{|k, v| monthly_bookings[k] = v.sum(&:order_value_cents)}
-  
+      
     empty_bookings = {}
     d = last_year_begin
     while d <= Time.now.utc.to_date
@@ -55,11 +59,11 @@ class Opportunity < ActiveRecord::Base
     monthly_bookings.merge!(empty_bookings){|k, v1, v2| v1}
     sorted_bookings = monthly_bookings.sort
     bookings_values = sorted_bookings.collect{|b| b[1]}
-
+    
     # accumulated monthly totals  
     sum = 0 and last_year = bookings_values.slice(0..11).collect{|t| (sum += t)}
     sum = 0 and this_year = bookings_values.slice(12..monthly_bookings.length).collect{|t| (sum += t)}
-
+    
     x = sorted_bookings.collect{|d| d[0].to_time.to_i * 1000}
     y = last_year + this_year
     y.collect!{|b| b/100 }
@@ -67,9 +71,23 @@ class Opportunity < ActiveRecord::Base
     bookings_series = series.transpose #these are your bookings for the chart
   
     # This section will prepare the forecast data series
-    forecast = f.where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end).group_by{|o| o.order_date.beginning_of_month}
-    monthly_forecast = {} and forecast.each{|k, v| monthly_forecast[k] = v.sum(&:order_value_cents)}
-
+    fresh_forecast = f.where('order_date >= ? AND order_date <= ? AND stale = ?', last_year_begin, next_year_end, false).group_by{|o| o.order_date.beginning_of_month}
+    stale_forecast = f.where('order_date >= ? AND order_date <= ?', last_year_begin, next_year_end).group_by{|o| o.order_date.beginning_of_month}
+    
+    monthly_weighted_fresh = {} and fresh_forecast.each{|k, v| monthly_weighted_fresh[k] = v.sum(&:weighted_order_value_cents)}
+    monthly_unweighted_fresh = {} and fresh_forecast.each{|k, v| monthly_unweighted_fresh[k] = v.sum(&:order_value_cents)}
+    monthly_weighted_stale = {} and stale_forecast.each{|k, v| monthly_weighted_stale[k] = v.sum(&:weighted_order_value_cents)}
+    monthly_unweighted_stale = {} and stale_forecast.each{|k, v| monthly_unweighted_stale[k] = v.sum(&:order_value_cents)}
+    
+    weighted_fresh_forecast = forecast_for_chart(monthly_weighted_fresh, last_year_begin, next_year_end, bookings_series)
+    unweighted_fresh_forecast = forecast_for_chart(monthly_unweighted_fresh, last_year_begin, next_year_end, bookings_series)
+    weighted_stale_forecast = forecast_for_chart(monthly_weighted_stale, last_year_begin, next_year_end, bookings_series)
+    unweighted_stale_forecast = forecast_for_chart(monthly_unweighted_stale, last_year_begin, next_year_end, bookings_series)
+    
+    return bookings_series, weighted_fresh_forecast, unweighted_fresh_forecast, weighted_stale_forecast, unweighted_stale_forecast
+  end
+  
+  def self.forecast_for_chart(monthly_forecast, last_year_begin, next_year_end, bookings_series)
     empty_forecast = {}
     d = last_year_begin
     while d < next_year_end
@@ -91,11 +109,10 @@ class Opportunity < ActiveRecord::Base
     x = sorted_forecast.collect{|d| d[0].to_time.to_i * 1000}
     y = []<<old_forecast<<this_year<<next_year
     y.flatten!
-    forecast_series = [] and y.each_with_index{|top, i| forecast_series << [ x[i], top, top - forecast_values[i] ] }
-    
-    return bookings_series, forecast_series
+    series = [] and y.each_with_index{|top, i| series << [ x[i], top, top - forecast_values[i] ] }
+    return series
   end
-        
+            
   protected
   
   # TODO Figure out how to work with the account's time zone to validate forecast dates.
@@ -108,8 +125,8 @@ class Opportunity < ActiveRecord::Base
     end        
   end
   
-  def set_update_requirement_and_make_fresh
-    self.update_requirement = (Time.now.utc.to_date + account.recent_period.days)
+  def set_expiration_date_and_make_fresh
+    self.expiration_date = (Time.now.utc.to_date + account.recent_period.days)
     self.stale = 'false'
   end
   

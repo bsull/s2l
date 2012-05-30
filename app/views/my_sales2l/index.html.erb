@@ -1,27 +1,58 @@
 <div class="g640 inside">
 <div id="chart" style="width:600px;height:300px;margin-right:auto;margin-left:auto;"></div> 
-<script id="source" language="javascript" type="text/javascript"> 
-  $(function () {
-	var d = <%= @current_account.bft_chart(@bookings, @forecast, current_user).to_json %>;
-	var data = [	  
-	  { label: "Targets", data: d[0], lines: { show: true, steps: true, lineWidth: 0, fill: .3 }, color: "#333" },
-	  { label: "Forecast", data: d[2], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#C20C0C" },
-	  { label: "Bookings", data: d[1], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#333" }
-	];
-    $.plot($("#chart"), data, {
-	  xaxis: { mode: "time", min: d[3], max: d[4], ticks: 5 },
-	  legend: { show: false }
-    });
-  });
-</script>
+	<script id="source" language="javascript" type="text/javascript"> 
+	  $(function () {
+		var d = <%= @current_account.bft_chart(@bookings, @forecast, @current_user).to_json %>;
+		
+		$("#chart_switcher").find("input").click(setForecastSeries);
+		
+		function setForecastSeries () {
+	      var forecastSeries;
+	      var weight = $("input[name=weight]:checked").val(); 	  
+	      var freshness = $("input[name=freshness]:checked").val(); 	  
+	  
+		  if (weight == "weighted" && freshness == "fresh") 
+			{forecastSeries = d[4];}
+		  else if (weight == "unweighted" && freshness == "fresh")
+		    {forecastSeries = d[5];}
+		  else if (weight == "weighted" && freshness == "stale")
+		    {forecastSeries = d[6];}
+		  else
+		    {forecastSeries = d[7];}
+		
+		  var data = [	  
+	        { label: "Targets", data: d[2], lines: { show: true, steps: true, lineWidth: 0, fill: .3 }, color: "#333" },
+	        { label: "Forecast", data: forecastSeries, bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#C20C0C" },
+	        { label: "Bookings", data: d[3], bars: { show: true, barWidth: 1000*60*60*24*22, lineWidth: .5, fill: 1 }, color: "#333" }
+	      ];
+	 
+		  $.plot($("#chart"), data, {
+		    xaxis: { mode: "time", min: d[0], max: d[1], ticks: 5 },
+		    legend: { show: false }
+		  });
+			
+	    }
+	    
+	    setForecastSeries();
+	
+	  });
+	</script>
 </div>
+
 <div class="g320" style="margin-top:1em;">
 	<h1>
 		<span style="color:#333">Bookings</span><br>
 		<span style="color:#c20c0c">Forecast</span><br>
 		<span style="color:#B2B2B2">Targets</span>
-	</h1>	
-
-	<%= link_to 'Set Targets', polymorphic_path([current_user, :targets]) %>
+	</h1>
+	
+	<div id="chart_switcher">		
+		<%= radio_button_tag 'weight', 'weighted', true %><%= label_tag "weight_weighted", "Weighted", :class => "radio" %><br>
+		<%= radio_button_tag 'weight', 'unweighted' %><%= label_tag "weight_unweighted", "Un-weighted", :class => "radio" %><br>
+	    <br>		
+		<%= radio_button_tag 'freshness', 'fresh', true %><%= label_tag "freshness_fresh", "Fresh only", :class => "radio" %><br>
+		<%= radio_button_tag 'freshness', 'stale' %><%= label_tag "freshness_stale", "Include stale", :class => "radio" %>
+    </div><br>
+	<%= link_to 'Set Targets', polymorphic_path([@current_user, :targets]) %>
 </div>
 <div class="clear">&nbsp;</div>

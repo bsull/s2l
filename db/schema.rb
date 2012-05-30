@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504205342) do
+ActiveRecord::Schema.define(:version => 20120529184448) do
 
   create_table "accounts", :force => true do |t|
     t.string   "subdomain"
@@ -59,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20120504205342) do
     t.date     "status_change_date"
     t.string   "status"
     t.boolean  "stale"
-    t.date     "update_requirement"
+    t.date     "expiration_date"
     t.integer  "order_value_cents",  :limit => 8, :default => 0
   end
 

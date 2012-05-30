@@ -32,9 +32,9 @@ class Account < ActiveRecord::Base
     chart_begin += 3.months while chart_begin <= Time.now.utc.to_date - 9.months
     chart_end = chart_begin + 18.months - 1.day
     
-    bookings, forecast = Opportunity.bft_chart(b, f, last_year_begin, next_year_end)
+    bookings_series, weighted_fresh_forecast, unweighted_fresh_forecast, weighted_stale_forecast, unweighted_stale_forecast = Opportunity.bft_chart(b, f, last_year_begin, next_year_end)
 
-    data = [] << Target.bft_chart(t, fiscal_year_end) << bookings << forecast << chart_begin.to_time.to_i * 1000 << chart_end.to_time.to_i * 1000
+    data = [] << chart_begin.to_time.to_i * 1000 << chart_end.to_time.to_i * 1000 << Target.bft_chart(t, fiscal_year_end) << bookings_series << weighted_fresh_forecast << unweighted_fresh_forecast << weighted_stale_forecast << unweighted_stale_forecast
   end
 
 end
